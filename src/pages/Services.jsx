@@ -3,7 +3,6 @@ import Page from '../components/Page'
 import PageHero from '../components/PageHero'
 import StackingDisciplines from '../components/StackingDisciplines'
 import Methodology from '../components/Methodology'
-import PromiseBand from '../components/PromiseBand'
 import CtaBand from '../components/CtaBand'
 
 export default function Services() {
@@ -16,7 +15,6 @@ export default function Services() {
       <PageHero label={hero.label} title={hero.title} sub={hero.sub} video={videos.services} />
       <StackingDisciplines />
       <Methodology />
-      <PromiseBand />
       <CtaBand />
     </Page>
   )

@@ -1,21 +1,21 @@
 import Page from '../components/Page'
 import Hero from '../components/Hero'
-import HomeIntro from '../components/HomeIntro'
-import Difference from '../components/Difference'
+import Statement from '../components/Statement'
+import Formula from '../components/Formula'
 import ServiceCards from '../components/ServiceCards'
-import SectorsMosaic from '../components/SectorsMosaic'
-import PromiseBand from '../components/PromiseBand'
+import GlassQuote from '../components/GlassQuote'
+import SectorsLine from '../components/SectorsLine'
 import CtaBand from '../components/CtaBand'
 
 export default function Home() {
   return (
     <Page>
       <Hero />
-      <Difference />
+      <Statement />
+      <Formula />
       <ServiceCards />
-      <HomeIntro />
-      <SectorsMosaic />
-      <PromiseBand />
+      <GlassQuote />
+      <SectorsLine />
       <CtaBand />
     </Page>
   )

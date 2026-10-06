@@ -4,7 +4,6 @@ import PageHero from '../components/PageHero'
 import NotStatement from '../components/NotStatement'
 import Principles from '../components/Principles'
 import CoreValues from '../components/CoreValues'
-import Protect from '../components/Protect'
 import CtaBand from '../components/CtaBand'
 
 export default function About() {
@@ -18,7 +17,6 @@ export default function About() {
       <NotStatement />
       <Principles />
       <CoreValues />
-      <Protect />
       <CtaBand />
     </Page>
   )

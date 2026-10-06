@@ -49,7 +49,7 @@
   h1,
   h2,
   h3 {
-    @apply font-serif font-normal text-balance text-navy;
+    @apply font-serif font-light text-balance text-navy;
     letter-spacing: -0.015em;
   }
   ::selection {
@@ -68,8 +68,9 @@
   .container-x {
     @apply mx-auto w-full max-w-[1400px] px-5 sm:px-8;
   }
+  /* Generous vertical rhythm — premium means room to breathe */
   .section-y {
-    @apply py-20 md:py-28;
+    @apply py-24 md:py-36 lg:py-44;
   }
   /* Small uppercase, semi-expanded label used for nav, buttons and eyebrows */
   .label {

@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { home, nav, services, site } from '../content/site'
+import { nav, services, site } from '../content/site'
 import { prefetch } from '../pages/loaders'
-import { emphasize } from '../utils/helpers'
 import { scrollToHash } from '../utils/scrollAnimations'
-import Button from './ui/Button'
 import Icon from './ui/Icon'
 import { Logo } from './ui/Logo'
-import Marble from './ui/Marble'
 
 function DubaiTime() {
   const [now, setNow] = useState(() => new Date())
@@ -20,45 +17,39 @@ function DubaiTime() {
   )
 }
 
-const heading = 'label !text-[0.5625rem] text-gold-light'
-const link = 'link-underline py-1 text-sm text-white/80 hover:text-white'
+const heading = 'label !text-[0.5625rem] text-muted'
+const link = 'link-underline py-1 text-sm text-navy hover:text-gold-ink'
 
+/** Refine-style white footer: quiet, spacious, everything in its place. */
 export default function Footer() {
   const year = new Date().getFullYear()
-
   return (
-    <footer className="relative overflow-hidden bg-navy-deep text-white">
-      <Marble tone="navy" seed={3} className="opacity-35" />
-      <div className="container-x relative pt-24 pb-10 md:pt-32">
-        <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
-          <p className="font-serif text-[length:var(--text-hero)] leading-[0.98] text-white [&_.accent-italic]:text-gold-light">
-            {emphasize(home.hero.title)}
-          </p>
-          <div className="md:pb-3">
-            <Button href="/contact" variant="white">
-              Request a confidential discussion
-            </Button>
-          </div>
-        </div>
-
-        <div className="mt-20 grid gap-12 border-t border-white/15 pt-14 sm:grid-cols-2 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <Logo className="h-[18px] text-white" />
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/70">{site.footerBlurb}</p>
-          </div>
-          <nav aria-label="Footer" className="lg:col-span-2">
-            <h2 className={heading}>Navigation</h2>
-            <ul className="mt-4 space-y-1">
-              {nav.map((n) => (
+    <footer className="bg-white pt-24 pb-10">
+      <div className="container-x">
+        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <Link to="/" aria-label={`${site.name} — home`}>
+            <Logo className="h-[18px] text-navy" />
+          </Link>
+          <nav aria-label="Footer">
+            <ul className="flex flex-wrap gap-x-10 gap-y-2">
+              {[{ to: '/', key: 'home', label: 'Home' }, ...nav].map((n) => (
                 <li key={n.to}>
-                  <Link to={n.to} onMouseEnter={() => prefetch(n.key)} className={link}>
+                  <Link
+                    to={n.to}
+                    onMouseEnter={() => prefetch(n.key)}
+                    className="label link-underline py-2 text-navy hover:text-gold-ink"
+                  >
                     {n.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <div className="lg:col-span-3">
+        </div>
+
+        <div className="mt-16 grid gap-12 border-t border-line pt-14 md:grid-cols-12">
+          <p className="max-w-sm text-sm leading-relaxed text-muted md:col-span-5">{site.footerBlurb}</p>
+          <div className="md:col-span-3 md:col-start-7">
             <h2 className={heading}>Services</h2>
             <ul className="mt-4 space-y-1">
               {services.map((s) => (
@@ -70,40 +61,39 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-          <div className="lg:col-span-3">
+          <div className="md:col-span-3">
             <h2 className={heading}>Office</h2>
-            <address className="mt-4 text-sm leading-relaxed text-white/80 not-italic">
+            <address className="mt-4 text-sm leading-relaxed text-navy not-italic">
               {site.office.map((l) => (
                 <span key={l} className="block">
                   {l}
                 </span>
               ))}
-              <a href={`mailto:${site.email}`} className="link-underline mt-3 inline-block text-white">
+              <a href={`mailto:${site.email}`} className="link-underline mt-3 inline-block hover:text-gold-ink">
                 {site.email}
               </a>
             </address>
-            <p className="label mt-4 !text-[0.5625rem] text-white/60">
+            <p className="label mt-4 !text-[0.5625rem] text-muted">
               Dubai · <DubaiTime />
             </p>
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-6 border-t border-white/15 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 flex flex-col gap-4 border-t border-line pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {site.name}. All rights reserved.
           </p>
-          <p className="font-serif text-sm text-white/70 italic">{site.promise.join(' · ')}</p>
+          <p className="font-serif text-sm italic">{site.promise.join(' · ')}</p>
           <button
             type="button"
             onClick={() => scrollToHash('#top')}
             aria-label="Back to top"
-            className="group inline-flex size-10 items-center justify-center rounded-full border border-white/20 text-white hover:bg-white hover:text-navy"
+            className="group inline-flex size-10 items-center justify-center border border-navy/15 text-navy hover:bg-navy hover:text-white"
           >
             <Icon name="arrowUp" className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5" />
           </button>
         </div>
       </div>
-      <div aria-hidden="true" className="relative h-1 bg-gradient-to-r from-gold-ink via-gold-light to-gold-ink" />
     </footer>
   )
 }

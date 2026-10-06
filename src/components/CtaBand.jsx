@@ -1,66 +1,40 @@
-import { useRef } from 'react'
 import { cta } from '../content/site'
-import { emphasize, imgSrcSet, imgUrl } from '../utils/helpers'
-import { gsap, MOTION_OK, useGSAP } from '../utils/scrollAnimations'
+import { emphasize } from '../utils/helpers'
+import Beam from './ui/Beam'
 import Button from './ui/Button'
+import { Logo } from './ui/Logo'
 import Reveal from './ui/Reveal'
 
-const IMAGE = 'photo-1512453979798-5ea266f8880c'
-
-/** Origin-inspired closing invitation: calm full-bleed city image, centred serif headline. */
+/** Refine-style closing panel: deep navy, a single beam of light, the invitation on the left. */
 export default function CtaBand() {
-  const root = useRef(null)
-  const img = useRef(null)
-
-  useGSAP(
-    () => {
-      gsap.matchMedia().add(MOTION_OK, () => {
-        gsap.fromTo(
-          img.current,
-          { scale: 1.12 },
-          {
-            scale: 1,
-            ease: 'none',
-            scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom bottom', scrub: true },
-          },
-        )
-      })
-    },
-    { scope: root },
-  )
-
   return (
-    <section ref={root} aria-labelledby="cta-title" className="relative overflow-hidden bg-night text-white">
-      <img
-        ref={img}
-        src={imgUrl(IMAGE, 1600)}
-        srcSet={imgSrcSet(IMAGE, [900, 1600, 2200])}
-        sizes="100vw"
-        alt=""
-        loading="lazy"
-        className="absolute inset-0 size-full object-cover will-change-transform"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/55 to-night" />
-      <div className="relative mx-auto flex min-h-[80svh] max-w-4xl flex-col items-center justify-center px-6 py-28 text-center">
-        <Reveal as="p" className="label text-gold-light">
-          {cta.label}
-        </Reveal>
-        <Reveal
-          as="h2"
-          id="cta-title"
-          delay={0.05}
-          className="mt-6 text-[clamp(2.25rem,1.5rem+3.2vw,4.75rem)] leading-[1.02] !text-white [&_.accent-italic]:!text-gold-light"
-        >
-          {emphasize(cta.title)}
-        </Reveal>
-        <Reveal as="p" delay={0.12} className="mt-7 max-w-lg text-white/80">
-          {cta.body}
-        </Reveal>
-        <Reveal delay={0.2} className="mt-10">
-          <Button href={cta.action.to} variant="white">
-            {cta.action.label}
-          </Button>
-        </Reveal>
+    <section aria-labelledby="cta-title" className="bg-white px-3 sm:px-[30px]">
+      <div className="relative overflow-hidden bg-night text-white">
+        <Beam className="left-[86%] md:left-[64%]" />
+        <div className="relative flex flex-col justify-between gap-14 px-7 py-24 sm:px-14 md:flex-row md:items-center md:py-32">
+          <div className="max-w-xl">
+            <Reveal as="p" className="label text-gold-light">
+              {cta.label}
+            </Reveal>
+            <Reveal
+              as="h2"
+              id="cta-title"
+              delay={0.05}
+              className="mt-6 text-[clamp(2rem,1.4rem+2.4vw,3.5rem)] leading-[1.08] !text-white [&_.accent-italic]:!text-gold-light"
+            >
+              {emphasize(cta.title)}
+            </Reveal>
+            <Reveal delay={0.15} className="mt-10">
+              <Button href={cta.action.to} variant="white">
+                {cta.action.label}
+              </Button>
+            </Reveal>
+          </div>
+          <Reveal delay={0.2} className="hidden border-x border-white/50 px-6 py-3 md:block">
+            <Logo className="h-4 text-white" />
+          </Reveal>
+        </div>
+        <div aria-hidden="true" className="relative h-1 bg-gradient-to-r from-gold-ink via-gold-light to-gold-ink" />
       </div>
     </section>
   )

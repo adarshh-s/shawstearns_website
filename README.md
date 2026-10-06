@@ -13,8 +13,8 @@ npm run preview   # serve the build
 
 | Route       | Sections |
 |-------------|----------|
-| `/`         | Video hero that, on scroll (desktop, pinned), glides into a "What we protect" panel — capital, programme and reputation light up in turn, each with its own footage and a link to the relevant service; stacked version on phones · "Why clients choose" Origin-style dark bento · three services with live dotted-wave artwork · practice intro with a Refine-style beam panel · sectors mosaic · promise marquee · closing CTA |
-| `/about`    | Video header · "We are not contractors / designers / suppliers" (struck through on scroll) · principles · five core values · pinned "We protect your capital / programme / reputation" sequence · CTA |
+| `/`         | Video hero that, on scroll (desktop, pinned), glides into "What we protect" — capital, programme, reputation; stacked on phones · Scale-style statement whose words fill in on scroll · "Why clients choose" beside a Refine-style beam panel · three services as open columns · frosted promise card over a full-bleed image that opens out on scroll · sectors strip · Refine-style closing panel |
+| `/about`    | Video header · "We are not contractors / designers / suppliers" (struck through on scroll) · principles · five core values · CTA |
 | `/services` | Video header · three disciplines as stacking cards · interactive 8-step RIBA-aligned methodology (keyboard accessible tabs) · CTA |
 | `/careers`  | Image header · join the practice · what we offer · application form with CV upload |
 | `/contact`  | Image header · office, email and discretion details · map · enquiry form with RFP upload |
@@ -36,7 +36,7 @@ The careers and enquiry forms validate in the browser and support file uploads. 
 ## Motion and accessibility
 
 - Lenis smooth scrolling is driven by GSAP's ticker so scrubbed animations stay in sync.
-- One pinned showpiece per page (home hero, About "We protect", Services stacking cards); everything else is a gentle reveal.
+- Restraint by design: generous whitespace, light serif headlines, one palette. Scroll effects are few and deliberate (pinned home hero, statement word-fill, image opening out behind the frosted card, Services stacking cards); everything else is a gentle reveal.
 - With `prefers-reduced-motion`, Lenis is off, pinned sections render static versions, and videos show a still frame. Every video has a pause control.
 
 ## Deploying
