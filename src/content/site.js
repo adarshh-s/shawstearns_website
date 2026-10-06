@@ -45,7 +45,7 @@ export const services = [
   {
     num: '02',
     slug: 'cost-management',
-    video: 'branches',
+    video: 'cost',
     title: 'Cost Management & Quantity Surveying',
     summary: 'Independent commercial control and final account certainty.',
     body: 'Independent commercial management grounded in RICS standards. We provide design economics and cost planning, quantification and costing, production of pricing documents, value engineering, whole-life costing, cash flow forecasting, interim valuations, cost reporting, cost-value reconciliation, and final account settlement.',
@@ -62,7 +62,7 @@ export const services = [
   {
     num: '03',
     slug: 'development-advisory',
-    video: 'canopy',
+    video: 'advisory',
     title: 'Development Advisory',
     summary: 'Feasibility, financial modelling and strategic advice from the earliest stages through to handover.',
     body: 'Clear, commercially robust advice from the earliest stages. Feasibility studies, development appraisals, financial modelling, option analysis and strategic guidance that protect capital and maximise value before major commitments are made.',
@@ -91,7 +91,7 @@ export const nav = [
         },
         { title: 'Join us', links: [{ to: '/careers', label: 'Careers' }] },
       ],
-      feature: { image: '/media/grasses-poster.jpg', caption: 'Independent. Client-Side. Uncompromising.', to: '/about' },
+      feature: { image: '/media/window-poster.jpg', caption: 'Independent. Client-Side. Uncompromising.', to: '/about' },
     },
   },
   {
@@ -109,7 +109,7 @@ export const nav = [
           ],
         },
       ],
-      feature: { image: '/media/palms-poster.jpg', caption: 'Discipline over cost, programme and risk.', to: '/services' },
+      feature: { image: '/media/businessbay-poster.jpg', caption: 'Discipline over cost, programme and risk.', to: '/services' },
     },
   },
   { to: '/careers', key: 'careers', label: 'Careers' },
@@ -118,16 +118,23 @@ export const nav = [
 
 export const announcement = { label: 'We work with a limited number of clients', action: 'Request a discussion', to: '/contact' }
 
-// Calm nature-meets-city footage, matching the current site's hero (the home video is the
-// client's own). Mixkit free licence for the rest.
+// Footage: a mix of work-relevant clips (skylines, construction, cost reporting, planning,
+// signing, client discussions) and a few calm nature-meets-city moments that echo the
+// client's original hero. The home hero (Dubai skyline, day to dusk) and the handshake are
+// Pexels free licence; the rest are Mixkit free licence.
 export const videos = {
   home: { src1080: '/media/home-1080.mp4', src720: '/media/home-720.mp4', poster: '/media/home-poster.jpg' },
+  // relevant
+  handshake: { src720: '/media/handshake-720.mp4', poster: '/media/handshake-poster.jpg' },
+  cost: { src720: '/media/cost-720.mp4', poster: '/media/cost-poster.jpg' },
+  advisory: { src720: '/media/advisory-720.mp4', poster: '/media/advisory-poster.jpg' },
+  signing: { src720: '/media/signing-720.mp4', poster: '/media/signing-poster.jpg' },
+  window: { src720: '/media/window-720.mp4', poster: '/media/window-poster.jpg' },
+  skyline: { src720: '/media/skyline-720.mp4', poster: '/media/skyline-poster.jpg' },
+  businessbay: { src720: '/media/businessbay-720.mp4', poster: '/media/businessbay-poster.jpg' },
+  cranes: { src720: '/media/cranes-720.mp4', poster: '/media/cranes-poster.jpg' },
+  // calm
   dune: { src720: '/media/dune-720.mp4', poster: '/media/dune-poster.jpg' },
-  grasses: { src720: '/media/grasses-720.mp4', poster: '/media/grasses-poster.jpg' },
-  flowers: { src720: '/media/flowers-720.mp4', poster: '/media/flowers-poster.jpg' },
-  palms: { src720: '/media/palms-720.mp4', poster: '/media/palms-poster.jpg' },
-  branches: { src720: '/media/branches-720.mp4', poster: '/media/branches-poster.jpg' },
-  canopy: { src720: '/media/canopy-720.mp4', poster: '/media/canopy-poster.jpg' },
   meadow: { src720: '/media/meadow-720.mp4', poster: '/media/meadow-poster.jpg' },
   clouds: { src720: '/media/clouds-720.mp4', poster: '/media/clouds-poster.jpg' },
 }
@@ -205,17 +212,17 @@ export const home = {
       },
       {
         title: 'True independence',
-        video: 'grasses',
+        video: 'window',
         body: 'We work exclusively for you. No competing interests in the delivery supply chain.',
       },
       {
         title: 'Regulatory clarity',
-        video: 'flowers',
+        video: 'signing',
         body: 'Precise navigation of authority and stakeholder requirements to protect your programme, reputation and capital.',
       },
       {
         title: 'Chartered leadership',
-        video: 'palms',
+        video: 'cranes',
         body: 'Led by Chartered Surveyors and Chartered Construction Managers applying rigorous British professional standards.',
       },
     ],

@@ -15,7 +15,7 @@ export default function About() {
       title="About"
       description="Shaw Stearns is a pure client-side boutique. We exist solely to protect the interests of owners and developers."
     >
-      <PageHero label={hero.label} title={hero.title} sub={hero.sub} video={videos.grasses} />
+      <PageHero label={hero.label} title={hero.title} sub={hero.sub} video={videos.skyline} />
       <NotStatement />
       <Principles />
       <CoreValues />

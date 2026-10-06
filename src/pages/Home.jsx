@@ -1,4 +1,3 @@
-import { photos } from '../content/site'
 import Page from '../components/Page'
 import Hero from '../components/Hero'
 import Statement from '../components/Statement'
@@ -13,7 +12,7 @@ export default function Home() {
       <Hero />
       <Statement />
       <Pillars />
-      <GlassQuote image={photos.contact} alt="Looking out over the city through cherry blossoms" />
+      <GlassQuote video="handshake" />
       <SectorsLine />
       <CtaBand />
     </Page>
