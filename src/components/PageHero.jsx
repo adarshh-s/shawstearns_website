@@ -95,8 +95,8 @@ export default function PageHero({ label, title, sub, video, image }) {
               <VideoBg video={video} playing={playing} label="header video" className={MASK} />
             ) : (
               <img
-                src={imgUrl(image, 1400)}
-                srcSet={imgSrcSet(image, [800, 1400, 2000])}
+                src={image.startsWith('/') ? image : imgUrl(image, 1400)}
+                srcSet={image.startsWith('/') ? undefined : imgSrcSet(image, [800, 1400, 2000])}
                 sizes="(min-width: 768px) 58vw, 100vw"
                 alt=""
                 className={`size-full object-cover ${MASK}`}

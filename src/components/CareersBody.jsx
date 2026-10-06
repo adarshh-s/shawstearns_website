@@ -110,7 +110,10 @@ export default function CareersBody() {
             <p id="join-title" className="label text-gold-ink">
               {careers.join.label}
             </p>
-            <Reveal as="p" className="mt-5 font-serif text-[clamp(1.375rem,1.15rem+0.8vw,1.875rem)] leading-[1.4] text-navy">
+            <Reveal
+              as="p"
+              className="mt-5 font-display text-[clamp(1.5rem,1.25rem+0.8vw,2rem)] leading-[1.35] font-light text-navy"
+            >
               {careers.join.body}
             </Reveal>
           </div>

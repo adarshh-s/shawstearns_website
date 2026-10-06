@@ -35,13 +35,19 @@ export default function NotStatement() {
           </h2>
           <ul className="space-y-2">
             {about.notList.map((l) => (
-              <li key={l} className="relative w-fit font-serif text-[length:var(--text-h2)] leading-[1.15] text-navy/45">
+              <li
+                key={l}
+                className="relative w-fit font-display text-[length:var(--text-h2)] leading-[1.1] font-light tracking-[-0.01em] text-navy/40"
+              >
                 {l}
                 <span data-strike aria-hidden="true" className="absolute top-[55%] left-0 h-px w-full origin-left bg-gold" />
               </li>
             ))}
           </ul>
-          <Reveal as="p" className="mt-8 max-w-2xl font-serif text-[length:var(--text-h3)] leading-snug text-navy">
+          <Reveal
+            as="p"
+            className="mt-8 max-w-2xl font-display text-[length:var(--text-h3)] leading-snug font-light tracking-[-0.01em] text-navy"
+          >
             {about.exclusive.split('—')[0]}— <em className="accent-italic">{about.exclusive.split('—')[1].trim()}</em>
           </Reveal>
         </div>

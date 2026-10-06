@@ -13,9 +13,9 @@ npm run preview   # serve the build
 
 | Route       | Sections |
 |-------------|----------|
-| `/`         | Video hero that, on scroll (desktop, pinned), glides into "What we protect" — capital, programme, reputation; stacked on phones · Scale-style statement whose words fill in on scroll · "Why clients choose" beside a Refine-style beam panel · three services as open columns · frosted promise card over a full-bleed image that opens out on scroll · sectors strip · Refine-style closing panel |
-| `/about`    | Video header · "We are not contractors / designers / suppliers" (struck through on scroll) · principles · five core values · CTA |
-| `/services` | Video header · three disciplines as stacking cards · interactive 8-step RIBA-aligned methodology (keyboard accessible tabs) · CTA |
+| `/`         | Client's own hero video that, on scroll (desktop, pinned), shrinks into the first of three service cards while the other two slide in with their own footage · Origin-style dark statement (words fill in on scroll) with RICS / CIOB / Chartered marks · "Why clients choose" as large footage cards · frosted promise card over the client's photo · sectors strip · lush full-bleed closing invitation |
+| `/about`    | Video header · "We are not contractors / designers / suppliers" (struck through on scroll) · principles · five core values · frosted "Professional standards" card over a full-bleed image · CTA |
+| `/services` | Video header · three disciplines as stacking cards, each with its own footage · interactive 8-step RIBA-aligned methodology (keyboard accessible tabs) · CTA |
 | `/careers`  | Image header · join the practice · what we offer · application form with CV upload |
 | `/contact`  | Image header · office, email and discretion details · map · enquiry form with RFP upload |
 
@@ -24,8 +24,9 @@ Navigation follows scale.com: a dismissible navy announcement strip, then a full
 ## Content and media
 
 - **All copy:** `src/content/site.js` (wrap words in `*asterisks*` for the gold serif-italic accent).
+- **Typography:** Loretta Display Light for headings and display (with its italic for accent words), Poppins for everything else. Poppins loads from Google Fonts. Loretta Display is licensed — enable it by pasting your Adobe Fonts kit link where marked in `index.html`, or by adding `LorettaDisplay-Light.woff2` / `LorettaDisplay-LightItalic.woff2` to `public/fonts/` (see `public/fonts/README.txt`). Until then headings fall back to Newsreader Light.
 - **Brand:** navy `#22355B`, gold `#9A8254` (deeper `#7A6540` for small text and buttons, for contrast), slate `#5A6C8C`, light `#F2F3F5` — set in the `@theme` block of `src/styles/globals.css`. Logo and mark are in `src/assets/` (inlined, so they take the text colour).
-- **Video:** `public/media/` — Mixkit free-licence clips chosen to match the current site's subjects (Dubai skyline, offices). Replace with the client's own footage using the same file names.
+- **Video & photos:** `public/media/`. The home hero is the client's own video (trees and grasses with the Dubai skyline), and the Careers / Contact headers and the frosted cards use the client's own photos (`public/media/images/`). The rest is calm nature-meets-city footage in the same mood — desert dune, grasses, flowers, palms, branches, tree canopy, meadow, clouds (Mixkit free licence). Swap any file by keeping the same name.
 - **Photos:** Unsplash IDs in `site.js` and a few components (`Difference.jsx`, `SectorsMosaic.jsx`, `CtaBand.jsx`). Swap for the client's photography before launch.
 - **Brand textures:** the dotted waves (`ui/DotWave.jsx`) and marble (`ui/Marble.jsx`) are generated in code, so there are no image files to manage.
 

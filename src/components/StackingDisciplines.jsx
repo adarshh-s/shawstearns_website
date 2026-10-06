@@ -1,8 +1,8 @@
 import { useRef } from 'react'
-import { services, servicesPage } from '../content/site'
+import { services, servicesPage, videos } from '../content/site'
 import { gsap, MOTION_OK, useGSAP } from '../utils/scrollAnimations'
 import Button from './ui/Button'
-import DotWave from './ui/DotWave'
+import VideoBg from './ui/VideoBg'
 import Icon from './ui/Icon'
 import SplitLines from './ui/SplitLines'
 
@@ -63,8 +63,10 @@ export default function StackingDisciplines() {
                   </Button>
                 </div>
               </div>
-              <div className="relative min-h-[240px] border-t border-navy/10 lg:border-t-0 lg:border-l">
-                <DotWave tone={d.wave} density={1.2} />
+              <div className="relative min-h-[260px] overflow-hidden bg-night">
+                <div className="absolute inset-0">
+                  <VideoBg video={videos[d.video]} label={`${d.title} video`} controlClassName="right-4 bottom-4" />
+                </div>
               </div>
               <div data-shade aria-hidden="true" className="pointer-events-none absolute inset-0 bg-white opacity-0" />
             </article>

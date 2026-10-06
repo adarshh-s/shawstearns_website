@@ -140,7 +140,9 @@ function MegaPanel({ item, onNavigate }) {
             className="absolute inset-0 size-full object-cover transition-transform duration-[1.2s] ease-[var(--ease-out-expo)] group-hover:scale-105"
           />
           <span className="absolute inset-0 bg-gradient-to-t from-night/75 via-night/10 to-transparent" />
-          <span className="absolute bottom-5 left-6 font-serif text-2xl text-white">{feature.caption}</span>
+          <span className="absolute bottom-5 left-6 font-display text-2xl font-light tracking-[-0.01em] text-white">
+            {feature.caption}
+          </span>
         </Link>
       </motion.div>
     </motion.div>
@@ -195,7 +197,7 @@ function MobileSheet({ onClose }) {
                     <button
                       type="button"
                       onClick={() => setSub(n.to)}
-                      className="flex w-full items-center justify-between py-3 text-left font-serif text-[2.25rem] leading-tight text-navy"
+                      className="flex w-full items-center justify-between py-3 text-left font-display text-[2.25rem] leading-tight font-light tracking-[-0.01em] text-navy"
                     >
                       {n.label}
                       <Icon name="chevronRight" className="size-5 text-muted" />
@@ -204,7 +206,7 @@ function MobileSheet({ onClose }) {
                     <Link
                       to={n.to}
                       onClick={onClose}
-                      className="flex items-center justify-between py-3 font-serif text-[2.25rem] leading-tight text-navy"
+                      className="flex items-center justify-between py-3 font-display text-[2.25rem] leading-tight font-light tracking-[-0.01em] text-navy"
                     >
                       {n.label}
                       <Icon name="chevronRight" className="size-5 text-muted" />
@@ -225,7 +227,11 @@ function MobileSheet({ onClose }) {
               <button type="button" onClick={() => setSub(null)} className="flex items-center gap-2 py-2 text-sm text-muted">
                 <Icon name="chevronLeft" className="size-4" /> Back
               </button>
-              <Link to={item.to} onClick={onClose} className="mt-2 block font-serif text-[2.25rem] leading-tight text-navy">
+              <Link
+                to={item.to}
+                onClick={onClose}
+                className="mt-2 block font-display text-[2.25rem] leading-tight font-light tracking-[-0.01em] text-navy"
+              >
                 {item.label}
               </Link>
               {item.menu.groups.map((g) => (

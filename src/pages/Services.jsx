@@ -12,7 +12,7 @@ export default function Services() {
       title="Services"
       description="Project Management, Cost Management & Quantity Surveying and Development Advisory — delivered with clarity, discipline and complete independence."
     >
-      <PageHero label={hero.label} title={hero.title} sub={hero.sub} video={videos.services} />
+      <PageHero label={hero.label} title={hero.title} sub={hero.sub} video={videos.palms} />
       <StackingDisciplines />
       <Methodology />
       <CtaBand />

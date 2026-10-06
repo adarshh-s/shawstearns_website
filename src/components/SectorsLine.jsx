@@ -22,7 +22,9 @@ export default function SectorsLine() {
           {sectors.items.map((s, i) => (
             <motion.li key={s} variants={fadeUpChild} className="flex items-center">
               {i > 0 && <span aria-hidden="true" className="mx-6 h-8 w-px bg-navy/15 md:mx-8" />}
-              <span className="font-serif text-[clamp(1.25rem,1.05rem+0.7vw,1.75rem)] font-light text-navy">{s}</span>
+              <span className="font-display text-[clamp(1.25rem,1.05rem+0.7vw,1.75rem)] font-light tracking-[-0.01em] text-navy">
+                {s}
+              </span>
             </motion.li>
           ))}
         </motion.ul>

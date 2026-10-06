@@ -120,11 +120,20 @@ export default function ContactSection() {
                 <p className="label text-gold-ink">{d.label}</p>
                 {d.lines.map((l, j) =>
                   d.href && j === 0 ? (
-                    <a key={l} href={d.href} className="link-underline mt-2 block font-serif text-xl text-navy">
+                    <a
+                      key={l}
+                      href={d.href}
+                      className="link-underline mt-2 block font-display text-xl font-light tracking-[-0.01em] text-navy"
+                    >
                       {l}
                     </a>
                   ) : (
-                    <p key={l} className={j === 0 ? 'mt-2 font-serif text-xl text-navy' : 'mt-1 text-sm text-muted'}>
+                    <p
+                      key={l}
+                      className={
+                        j === 0 ? 'mt-2 font-display text-xl font-light tracking-[-0.01em] text-navy' : 'mt-1 text-sm text-muted'
+                      }
+                    >
                       {l}
                     </p>
                   ),

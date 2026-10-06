@@ -1,6 +1,31 @@
 @import 'tailwindcss';
 @import './animations.css';
 
+/* Loretta Display (licensed — Adobe Fonts or font files). Either:
+   - add the licensed files to /public/fonts (see README.txt there), or
+   - add your Adobe Fonts kit <link> in index.html (family name "loretta-display").
+   Until then the display stack falls back to Newsreader Light. */
+@font-face {
+  font-family: 'Loretta Display';
+  src:
+    local('Loretta Display Light'),
+    local('LorettaDisplay-Light'),
+    url('/fonts/LorettaDisplay-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Loretta Display';
+  src:
+    local('Loretta Display Light Italic'),
+    local('LorettaDisplay-LightItalic'),
+    url('/fonts/LorettaDisplay-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
 @theme {
   /* Shaw Stearns brand */
   --color-navy: #22355b;
@@ -17,16 +42,18 @@
   --color-line: #e2e4e8;
   --color-night: #0f1729;
 
-  --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Newsreader', ui-serif, Georgia, serif;
-  --font-label: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  /* Display: Loretta Display Light. Everything else: Poppins. */
+  --font-display: 'Loretta Display', 'loretta-display', 'Newsreader', ui-serif, Georgia, serif;
+  --font-serif: 'Loretta Display', 'loretta-display', 'Newsreader', ui-serif, Georgia, serif;
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-label: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Fluid type scale */
   --text-hero: clamp(2.75rem, 1.6rem + 4.6vw, 5.75rem);
   --text-display: clamp(2.5rem, 1.6rem + 3.6vw, 4.75rem);
-  --text-h2: clamp(2rem, 1.45rem + 2.2vw, 3.5rem);
+  --text-h2: clamp(1.875rem, 1.4rem + 1.9vw, 3.25rem);
   --text-h3: clamp(1.5rem, 1.25rem + 0.9vw, 2.125rem);
 }
 
@@ -49,11 +76,15 @@
   h1,
   h2,
   h3 {
-    @apply font-serif font-light text-balance text-navy;
-    letter-spacing: -0.015em;
+    @apply font-display font-light text-balance text-navy;
+    letter-spacing: -0.01em;
   }
   ::selection {
     @apply bg-navy text-white;
+  }
+  /* Sections focused programmatically after an in-page jump shouldn't show a ring */
+  [tabindex='-1']:focus {
+    outline: none;
   }
   :focus-visible {
     outline: 2px solid var(--color-gold-ink);
@@ -75,13 +106,12 @@
   /* Small uppercase, semi-expanded label used for nav, buttons and eyebrows */
   .label {
     @apply font-label text-[0.6875rem] font-semibold uppercase;
-    font-stretch: 112.5%;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.14em;
   }
   /* Italic accent words, rendered from *word* markers in copy */
   .accent-italic {
-    @apply font-serif font-normal italic text-gold;
-    letter-spacing: -0.01em;
+    @apply font-serif font-light italic text-gold;
+    letter-spacing: 0;
     padding-right: 0.04em;
   }
   /* Media that dissolves into the page on all four sides (soft rectangle, not an oval) */

@@ -70,7 +70,7 @@ export default function Methodology() {
                   className="group flex flex-col items-center gap-2"
                 >
                   <span
-                    className={`relative z-10 inline-flex size-11 items-center justify-center rounded-full border font-serif text-lg transition-colors duration-300 ${
+                    className={`relative z-10 inline-flex size-11 items-center justify-center rounded-full border font-display text-lg font-light transition-colors duration-300 ${
                       on
                         ? 'border-navy bg-navy text-white'
                         : i < active

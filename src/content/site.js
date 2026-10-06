@@ -28,6 +28,7 @@ export const services = [
   {
     num: '01',
     slug: 'project-management',
+    video: 'home',
     title: 'Project Management',
     summary: 'End-to-end owner’s representation from strategy through to handover.',
     body: 'End-to-end owner’s representation across the full project lifecycle. We develop the client brief, manage feasibility and strategy, establish budgets and control benchmarks, identify and manage risk, coordinate regulatory consents, advise on team selection, integrate design information, prepare programmes and Critical Path networks, advise on procurement strategies, conduct tender evaluation, administer contracts, and control progress through to final handover.',
@@ -44,6 +45,7 @@ export const services = [
   {
     num: '02',
     slug: 'cost-management',
+    video: 'branches',
     title: 'Cost Management & Quantity Surveying',
     summary: 'Independent commercial control and final account certainty.',
     body: 'Independent commercial management grounded in RICS standards. We provide design economics and cost planning, quantification and costing, production of pricing documents, value engineering, whole-life costing, cash flow forecasting, interim valuations, cost reporting, cost-value reconciliation, and final account settlement.',
@@ -60,6 +62,7 @@ export const services = [
   {
     num: '03',
     slug: 'development-advisory',
+    video: 'canopy',
     title: 'Development Advisory',
     summary: 'Feasibility, financial modelling and strategic advice from the earliest stages through to handover.',
     body: 'Clear, commercially robust advice from the earliest stages. Feasibility studies, development appraisals, financial modelling, option analysis and strategic guidance that protect capital and maximise value before major commitments are made.',
@@ -88,7 +91,7 @@ export const nav = [
         },
         { title: 'Join us', links: [{ to: '/careers', label: 'Careers' }] },
       ],
-      feature: { image: '/media/about-poster.jpg', caption: 'Independent. Client-Side. Uncompromising.', to: '/about' },
+      feature: { image: '/media/grasses-poster.jpg', caption: 'Independent. Client-Side. Uncompromising.', to: '/about' },
     },
   },
   {
@@ -106,7 +109,7 @@ export const nav = [
           ],
         },
       ],
-      feature: { image: '/media/services-poster.jpg', caption: 'Discipline over cost, programme and risk.', to: '/services' },
+      feature: { image: '/media/palms-poster.jpg', caption: 'Discipline over cost, programme and risk.', to: '/services' },
     },
   },
   { to: '/careers', key: 'careers', label: 'Careers' },
@@ -115,10 +118,25 @@ export const nav = [
 
 export const announcement = { label: 'We work with a limited number of clients', action: 'Request a discussion', to: '/contact' }
 
+// Calm nature-meets-city footage, matching the current site's hero (the home video is the
+// client's own). Mixkit free licence for the rest.
 export const videos = {
-  home: { src720: '/media/home-720.mp4', poster: '/media/home-poster.jpg' },
-  about: { src720: '/media/about-720.mp4', poster: '/media/about-poster.jpg' },
-  services: { src720: '/media/services-720.mp4', poster: '/media/services-poster.jpg' },
+  home: { src1080: '/media/home-1080.mp4', src720: '/media/home-720.mp4', poster: '/media/home-poster.jpg' },
+  dune: { src720: '/media/dune-720.mp4', poster: '/media/dune-poster.jpg' },
+  grasses: { src720: '/media/grasses-720.mp4', poster: '/media/grasses-poster.jpg' },
+  flowers: { src720: '/media/flowers-720.mp4', poster: '/media/flowers-poster.jpg' },
+  palms: { src720: '/media/palms-720.mp4', poster: '/media/palms-poster.jpg' },
+  branches: { src720: '/media/branches-720.mp4', poster: '/media/branches-poster.jpg' },
+  canopy: { src720: '/media/canopy-720.mp4', poster: '/media/canopy-poster.jpg' },
+  meadow: { src720: '/media/meadow-720.mp4', poster: '/media/meadow-poster.jpg' },
+  clouds: { src720: '/media/clouds-720.mp4', poster: '/media/clouds-poster.jpg' },
+}
+
+// The client's own photography (from the current site).
+export const photos = {
+  lobby: '/media/images/About__Pic_1.jpg',
+  careers: '/media/images/Careers-Page-photo.jpg',
+  contact: '/media/images/contact-us-option-2.jpg',
 }
 
 export const images = {
@@ -182,15 +200,22 @@ export const home = {
     items: [
       {
         title: 'Certainty where it matters most',
+        video: 'dune',
         body: 'Disciplined governance and senior oversight that eliminate overruns and disputes.',
       },
-      { title: 'True independence', body: 'We work exclusively for you. No competing interests in the delivery supply chain.' },
+      {
+        title: 'True independence',
+        video: 'grasses',
+        body: 'We work exclusively for you. No competing interests in the delivery supply chain.',
+      },
       {
         title: 'Regulatory clarity',
+        video: 'flowers',
         body: 'Precise navigation of authority and stakeholder requirements to protect your programme, reputation and capital.',
       },
       {
         title: 'Chartered leadership',
+        video: 'palms',
         body: 'Led by Chartered Surveyors and Chartered Construction Managers applying rigorous British professional standards.',
       },
     ],
@@ -201,6 +226,13 @@ export const home = {
     title: 'Sectors we *serve*.',
     items: ['Corporate Real Estate', 'Retail', 'Hospitality', 'Mixed-Use', 'Healthcare', 'Defence'],
   },
+}
+
+// Refine-style full-width video banner (copy from the Contact page).
+export const discretion = {
+  label: 'Confidential by default',
+  title: 'Every enquiry is treated with full *discretion*.',
+  action: { label: 'Start a conversation', to: '/contact' },
 }
 
 export const cta = {
