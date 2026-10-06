@@ -1,0 +1,114 @@
+@import 'tailwindcss';
+@import './animations.css';
+
+@theme {
+  /* Shaw Stearns brand */
+  --color-navy: #22355b;
+  --color-navy-deep: #16233e;
+  --color-gold: #9a8254; /* decorative / large text */
+  --color-gold-ink: #7a6540; /* gold for small text & buttons — 5.6:1 on white */
+  --color-gold-light: #c9b48a; /* gold on navy */
+  --color-slate: #5a6c8c;
+  --color-ink: #34383d;
+  --color-paper: #ffffff;
+  --color-mist: #f2f3f5;
+  --color-sand: #f6f3ec;
+  --color-muted: #5f6670;
+  --color-line: #e2e4e8;
+  --color-night: #0f1729;
+
+  --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Newsreader', ui-serif, Georgia, serif;
+  --font-label: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Fluid type scale */
+  --text-hero: clamp(2.75rem, 1.6rem + 4.6vw, 5.75rem);
+  --text-display: clamp(2.5rem, 1.6rem + 3.6vw, 4.75rem);
+  --text-h2: clamp(2rem, 1.45rem + 2.2vw, 3.5rem);
+  --text-h3: clamp(1.5rem, 1.25rem + 0.9vw, 2.125rem);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Anchor jumps are animated with GSAP (native smooth scroll would fight it), so this is the no-JS fallback only */
+  @media (prefers-reduced-motion: no-preference) {
+    html:not(.js) {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    @apply bg-paper font-sans text-ink leading-relaxed;
+    /* Guard against transient horizontal overflow from slide-in animations; clip keeps position: sticky working */
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-serif font-normal text-balance text-navy;
+    letter-spacing: -0.015em;
+  }
+  ::selection {
+    @apply bg-navy text-white;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold-ink);
+    outline-offset: 3px;
+  }
+  section[id] {
+    scroll-margin-top: 72px;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1400px] px-5 sm:px-8;
+  }
+  .section-y {
+    @apply py-20 md:py-28;
+  }
+  /* Small uppercase, semi-expanded label used for nav, buttons and eyebrows */
+  .label {
+    @apply font-label text-[0.6875rem] font-semibold uppercase;
+    font-stretch: 112.5%;
+    letter-spacing: 0.06em;
+  }
+  /* Italic accent words, rendered from *word* markers in copy */
+  .accent-italic {
+    @apply font-serif font-normal italic text-gold;
+    letter-spacing: -0.01em;
+    padding-right: 0.04em;
+  }
+  /* Media that dissolves into the page on all four sides (soft rectangle, not an oval) */
+  .soft-fade {
+    -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 16%, #000 84%, transparent),
+      linear-gradient(to bottom, transparent, #000 14%, #000 78%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent, #000 16%, #000 84%, transparent),
+      linear-gradient(to bottom, transparent, #000 14%, #000 78%, transparent);
+    mask-composite: intersect;
+  }
+  /* Frosted glass surface for pills and chips over imagery */
+  .glass {
+    @apply border border-white/20 bg-white/10 text-white backdrop-blur-md;
+  }
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-[-3px] left-0 h-px w-full origin-right scale-x-0 bg-current;
+    transition: transform 0.45s var(--ease-out-expo);
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after,
+  .group:hover .link-underline::after {
+    @apply origin-left scale-x-100;
+  }
+}
