@@ -79,7 +79,7 @@ function ServiceCaption({ s }) {
       <h3 className="mt-2 text-[1.5rem] leading-tight">{s.title}</h3>
       <p className="mt-3 text-sm leading-relaxed text-muted">{s.summary}</p>
       <span className="mt-5 flex items-center gap-3">
-        <ArrowBox tone="navy" className="!rounded-none" />
+        <ArrowBox tone="navy" />
         <span className="label !text-[0.5625rem] text-navy">Learn more</span>
       </span>
     </Link>

@@ -47,7 +47,7 @@ export function FileField({ label, hint, file, onChange, error, required, accept
         {required && <span aria-hidden="true"> *</span>}
       </p>
       {file ? (
-        <div className="mt-3 flex items-center justify-between gap-4 border border-navy/20 px-4 py-3 text-sm">
+        <div className="mt-3 flex items-center justify-between gap-4 rounded-xl border border-navy/20 px-4 py-3 text-sm">
           <span className="truncate text-navy">{file.name}</span>
           <button type="button" onClick={() => onChange(null)} className="label shrink-0 text-gold-ink hover:text-navy">
             Remove
@@ -56,7 +56,7 @@ export function FileField({ label, hint, file, onChange, error, required, accept
       ) : (
         <label
           htmlFor={id}
-          className="mt-3 flex cursor-pointer items-center justify-between gap-4 border border-dashed border-navy/25 px-4 py-4 text-sm text-muted transition-colors hover:border-navy has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-gold-ink"
+          className="mt-3 flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-dashed border-navy/25 px-4 py-4 text-sm text-muted transition-colors hover:border-navy has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-gold-ink"
         >
           <span>{hint}</span>
           <span className="label shrink-0 text-gold-ink">Choose file</span>

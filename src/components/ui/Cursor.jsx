@@ -6,7 +6,8 @@ const FIELD = 'input, textarea, select, [contenteditable="true"]'
 /**
  * Minimal cursor accent: a dot that tracks the pointer exactly and a thin ring that trails
  * with easing. The ring grows softly over links and buttons and steps aside over form fields.
- * The native cursor is kept; this only renders for fine pointers without reduced motion.
+ * It replaces the native cursor, and only renders for fine pointers without reduced motion
+ * (touch devices and reduced-motion users keep the normal system cursor).
  */
 export default function Cursor() {
   const ring = useRef(null)
@@ -20,6 +21,8 @@ export default function Cursor() {
 
   useEffect(() => {
     if (!enabled) return
+    // The custom cursor replaces the native arrow entirely (see .has-custom-cursor in globals.css).
+    document.documentElement.classList.add('has-custom-cursor')
     let x = -100
     let y = -100
     let rx = x
@@ -82,6 +85,7 @@ export default function Cursor() {
       window.removeEventListener('pointerdown', onDown)
       window.removeEventListener('pointerup', onUp)
       document.documentElement.removeEventListener('pointerleave', onLeave)
+      document.documentElement.classList.remove('has-custom-cursor')
     }
   }, [enabled])
 
@@ -89,14 +93,14 @@ export default function Cursor() {
   // No blend modes: a full-screen mix-blend layer forces the page to be re-blended every
   // frame. A navy stroke with a faint white halo reads on both light and dark sections.
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[100]">
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[2147483647]">
       <div
         ref={ring}
         className="absolute top-0 left-0 size-8 rounded-full border border-navy/50 opacity-0 shadow-[0_0_0_1px_rgba(255,255,255,0.35)] transition-opacity duration-300 will-change-transform"
       />
       <div
         ref={dot}
-        className="absolute top-0 left-0 size-1.5 rounded-full bg-gold opacity-0 shadow-[0_0_0_1px_rgba(255,255,255,0.5)] transition-[opacity,scale] duration-300 will-change-transform data-[state=field]:scale-0 data-[state=link]:scale-0"
+        className="absolute top-0 left-0 size-2 rounded-full bg-gold opacity-0 shadow-[0_0_0_1px_rgba(255,255,255,0.5)] transition-[opacity,scale] duration-300 will-change-transform data-[state=link]:scale-125"
       />
     </div>
   )

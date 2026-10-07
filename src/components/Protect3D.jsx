@@ -187,6 +187,9 @@ function Pinned() {
       const layers = q('[data-layer]')
       const arts = q('[data-art]')
       const guides = q('[data-guide]')
+      // Guides stand upright out of the base plane. GSAP owns their whole transform so the
+      // scaleY tween can't wipe out the rotation (which would lay them flat on the floor).
+      gsap.set(guides, { rotationX: 90, scaleY: 0, opacity: 1, transformOrigin: '50% 0%' })
       const [scene] = q('[data-scene]')
       const glows = q('[data-glow]')
       const details = q('[data-detail]')
@@ -369,7 +372,7 @@ function Pinned() {
                 <span
                   key={pos}
                   data-guide
-                  className={`absolute ${pos} h-[420px] w-px origin-top bg-gradient-to-b from-white/50 to-white/0 [transform:rotateX(-90deg)_scaleY(0)]`}
+                  className={`absolute ${pos} h-[420px] w-px origin-top bg-gradient-to-b from-white/50 to-white/0 opacity-0`}
                 />
               ))}
               {protect.items.map((it) => {

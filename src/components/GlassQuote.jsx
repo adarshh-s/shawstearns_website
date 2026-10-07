@@ -34,7 +34,7 @@ export default function GlassQuote({
           frame.current,
           { clipPath: 'inset(9% 7% 9% 7% round 28px)' },
           {
-            clipPath: 'inset(0% 0% 0% 0% round 0px)',
+            clipPath: 'inset(0% 0% 0% 0% round 28px)',
             ease: 'none',
             scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'top top', scrub: true },
           },
@@ -54,10 +54,10 @@ export default function GlassQuote({
   )
 
   return (
-    <section ref={root} aria-labelledby="quote-title" className="relative bg-white">
+    <section ref={root} aria-labelledby="quote-title" className="relative bg-white px-3 sm:px-[30px]">
       <div
         ref={frame}
-        className={`relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-night px-5 py-28 md:px-[9%] ${align === 'right' ? 'md:justify-end' : 'md:justify-start'}`}
+        className={`relative flex min-h-[100svh] items-center justify-center overflow-hidden rounded-[28px] bg-night px-5 py-28 md:px-[9%] ${align === 'right' ? 'md:justify-end' : 'md:justify-start'}`}
       >
         {image ? (
           <img
@@ -78,7 +78,7 @@ export default function GlassQuote({
           className={`absolute inset-0 ${align === 'right' ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-night/60 via-night/20 to-transparent`}
         />
 
-        <Reveal className="relative w-full max-w-md border border-white/25 bg-navy/35 px-9 py-14 text-center text-white backdrop-blur-xl sm:px-12">
+        <Reveal className="relative w-full max-w-md rounded-3xl border border-white/25 bg-navy/35 px-9 py-14 text-center text-white backdrop-blur-xl sm:px-12">
           <Mark className="mx-auto h-12 text-white" />
           {label && <p className="label mt-8 text-gold-light">{label}</p>}
           <h2 id="quote-title" className="mt-8 text-[clamp(1.75rem,1.4rem+1.2vw,2.5rem)] leading-[1.15] !text-white">

@@ -88,7 +88,7 @@ export default function Footer() {
             type="button"
             onClick={() => scrollToHash('#top')}
             aria-label="Back to top"
-            className="group inline-flex size-10 items-center justify-center border border-navy/15 text-navy hover:bg-navy hover:text-white"
+            className="group inline-flex size-10 items-center justify-center rounded-full border border-navy/15 text-navy hover:bg-navy hover:text-white"
           >
             <Icon name="arrowUp" className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5" />
           </button>

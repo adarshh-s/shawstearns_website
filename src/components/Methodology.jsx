@@ -98,7 +98,7 @@ export default function Methodology() {
         {/* Stakeholders run through every stage */}
         <div aria-hidden="true" className="relative mt-10 h-24">
           <DotWave tone="light" density={0.9} speed={0.6} />
-          <span className="label absolute top-1/2 left-1/2 -translate-1/2 bg-gold-ink px-3 py-1.5 !text-[0.5625rem] text-white">
+          <span className="label absolute top-1/2 left-1/2 -translate-1/2 rounded-full bg-gold-ink px-3 py-1.5 !text-[0.5625rem] text-white">
             Stakeholders
           </span>
         </div>

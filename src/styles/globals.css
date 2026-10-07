@@ -143,3 +143,9 @@
     @apply origin-left scale-x-100;
   }
 }
+
+/* Custom cursor active: hide the native pointer everywhere (text fields keep their caret). */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
