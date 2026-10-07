@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { contact, forms, site } from '../content/site'
 import { Field, FileField, fileTooBig, isEmail, MAX_FILE_MB } from './forms/Field'
 import { FormShell, SubmitButton } from './forms/FormShell'
 import { submitForm } from './forms/submit'
 import Icon from './ui/Icon'
+import LocalTime from './ui/LocalTime'
 import Reveal from './ui/Reveal'
 
 export function EnquiryForm() {
@@ -95,15 +96,7 @@ export function EnquiryForm() {
   )
 }
 
-/** Dubai local time, refreshed each half-minute. */
-export function LocalTime() {
-  const [now, setNow] = useState(() => new Date())
-  useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 30_000)
-    return () => clearInterval(id)
-  }, [])
-  return new Intl.DateTimeFormat('en-GB', { timeZone: site.timezone, hour: '2-digit', minute: '2-digit' }).format(now)
-}
+export { LocalTime }
 
 /** Contact details, office map and the enquiry form. */
 export default function ContactSection() {

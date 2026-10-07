@@ -28,7 +28,7 @@ export const services = [
   {
     num: '01',
     slug: 'project-management',
-    video: 'home',
+    video: 'pm',
     title: 'Project Management',
     summary: 'End-to-end owner’s representation from strategy through to handover.',
     body: 'End-to-end owner’s representation across the full project lifecycle. We develop the client brief, manage feasibility and strategy, establish budgets and control benchmarks, identify and manage risk, coordinate regulatory consents, advise on team selection, integrate design information, prepare programmes and Critical Path networks, advise on procurement strategies, conduct tender evaluation, administer contracts, and control progress through to final handover.',
@@ -135,6 +135,8 @@ export const videos = {
   businessbay: { src720: '/media/businessbay-720.mp4', poster: '/media/businessbay-poster.jpg' },
   cranes: { src720: '/media/cranes-720.mp4', poster: '/media/cranes-poster.jpg' },
   site: { src720: '/media/site-720.mp4', poster: '/media/site-poster.jpg' },
+  // Project Management outside the hero: engineers reading a drawing on site (Pexels 8964792).
+  pm: { src720: '/media/pm-720.mp4', poster: '/media/pm-poster.jpg' },
   // calm
   dune: { src720: '/media/dune-720.mp4', poster: '/media/dune-poster.jpg' },
   meadow: { src720: '/media/meadow-720.mp4', poster: '/media/meadow-poster.jpg' },
@@ -144,8 +146,10 @@ export const videos = {
 // The client's own photography (from the current site).
 export const photos = {
   lobby: '/media/images/About__Pic_1.jpg',
-  careers: '/media/images/Careers-Page-photo.jpg',
-  contact: '/media/images/contact-us-option-2.jpg',
+  // Careers: a team meeting above the city (Pexels 8101928). Contact: the Dubai World Trade
+  // Centre tower, home of Trade Centre First (Pexels 16494324). Client originals kept alongside.
+  careers: '/media/images/careers-team.jpg',
+  contact: '/media/images/contact-dwtc.jpg',
 }
 
 export const images = {
@@ -248,7 +252,15 @@ export const home = {
   sectors: {
     label: 'Sectors',
     title: 'Sectors we *serve*.',
-    items: ['Corporate Real Estate', 'Retail', 'Hospitality', 'Mixed-Use', 'Healthcare', 'Defence'],
+    // Sector photography: Pexels (19821492, 16619091, 31080809, 8910835, 9741487, 11467937).
+    items: [
+      { name: 'Corporate Real Estate', note: 'Headquarters, office towers and workplace', image: '/media/images/sector-corporate.jpg' },
+      { name: 'Retail', note: 'Malls, flagship stores and destination retail', image: '/media/images/sector-retail.jpg' },
+      { name: 'Hospitality', note: 'Hotels, resorts and branded residences', image: '/media/images/sector-hospitality.jpg' },
+      { name: 'Mixed-Use', note: 'Residential, commercial and public realm together', image: '/media/images/sector-mixed-use.jpg' },
+      { name: 'Healthcare', note: 'Hospitals, clinics and specialist facilities', image: '/media/images/sector-healthcare.jpg' },
+      { name: 'Defence', note: 'Secure, specialist and sensitive estates', image: '/media/images/sector-defence.jpg' },
+    ],
   },
 }
 

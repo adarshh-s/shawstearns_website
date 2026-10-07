@@ -1,5 +1,7 @@
+import { useRef } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { home, videos } from '../content/site'
+import { gsap, useGSAP } from '../utils/scrollAnimations'
 import SplitLines from './ui/SplitLines'
 import VideoBg from './ui/VideoBg'
 
@@ -17,11 +19,32 @@ export default function Pillars({
   items = home.difference.items,
 }) {
   const reduce = useReducedMotion()
+  const root = useRef(null)
+  // Phones: each footage card opens out from an inset frame as it scrolls in.
+  useGSAP(
+    () => {
+      gsap.matchMedia().add('(max-width: 1023px) and (prefers-reduced-motion: no-preference)', () => {
+        gsap.utils.toArray('[data-open]', root.current).forEach((el) => {
+          gsap.fromTo(
+            el,
+            { clipPath: 'inset(4% 7% 4% 7% round 24px)' },
+            {
+              clipPath: 'inset(0% 0% 0% 0% round 24px)',
+              ease: 'none',
+              scrollTrigger: { trigger: el, start: 'top 95%', end: 'top 45%', scrub: 0.4 },
+            },
+          )
+        })
+      })
+    },
+    { scope: root },
+  )
   return (
     <section
+      ref={root}
       id={id}
       aria-labelledby={`${id}-title`}
-      className="bg-night px-3 pt-24 pb-28 md:pt-32 text-white sm:px-[30px] md:pb-40"
+      className="bg-night px-3 pt-16 pb-28 text-white sm:px-[30px] md:pt-20 md:pb-40"
     >
       <div className="mx-auto max-w-2xl px-2 pt-4 text-center">
         <p className="label text-gold-light">{label}</p>
@@ -42,7 +65,7 @@ export default function Pillars({
             viewport={{ once: true, margin: '0px 0px -10% 0px' }}
             transition={{ duration: 1.1, ease: EASE, delay: (i % 2) * 0.12 }}
           >
-            <article className="group relative flex min-h-[440px] flex-col justify-end overflow-hidden rounded-3xl bg-navy p-8 sm:p-12 lg:min-h-[520px]">
+            <article data-open className="group relative flex min-h-[440px] flex-col justify-end overflow-hidden rounded-3xl bg-navy p-8 sm:p-12 lg:min-h-[520px]">
               <div className="absolute inset-0 transition-transform duration-[1.6s] ease-[var(--ease-out-expo)] group-hover:scale-[1.04]">
                 <VideoBg
                   video={videos[item.video]}

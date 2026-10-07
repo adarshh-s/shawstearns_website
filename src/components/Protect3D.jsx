@@ -3,7 +3,7 @@ import { useReducedMotion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { cta, home, servicesPage, videos } from '../content/site'
 import { emphasize } from '../utils/helpers'
-import { getLenis, gsap, useGSAP } from '../utils/scrollAnimations'
+import { getLenis, gsap, MOTION_OK, useGSAP } from '../utils/scrollAnimations'
 import Button from './ui/Button'
 import Icon from './ui/Icon'
 import { Mark } from './ui/Logo'
@@ -475,10 +475,27 @@ function Pinned() {
   )
 }
 
-/** Phones and reduced motion: the three cards stacked. */
+/**
+ * Phones and reduced motion: the three cards as a sticky deck. Each card pins just below the
+ * header and the next slides up over it, while the one beneath eases back and dims.
+ */
 function Static() {
+  const root = useRef(null)
+  useGSAP(
+    () => {
+      gsap.matchMedia().add(MOTION_OK, () => {
+        const cards = gsap.utils.toArray('[data-deck]', root.current)
+        cards.slice(0, -1).forEach((card, i) => {
+          const st = { trigger: cards[i + 1], start: 'top bottom', end: 'top 20%', scrub: true }
+          gsap.to(card.querySelector('[data-deck-body]'), { scale: 0.92, ease: 'none', scrollTrigger: st })
+          gsap.to(card.querySelector('[data-deck-dim]'), { opacity: 0.55, ease: 'none', scrollTrigger: st })
+        })
+      })
+    },
+    { scope: root },
+  )
   return (
-    <section aria-labelledby="protect3d-title" className="bg-night px-5 py-24 text-white">
+    <section ref={root} aria-labelledby="protect3d-title" className="bg-night px-5 pt-24 pb-16 text-white">
       <p className="label text-center text-gold-light">{protect.label}</p>
       <h2
         id="protect3d-title"
@@ -486,10 +503,13 @@ function Static() {
       >
         {emphasize(protect.title)}
       </h2>
-      <ol className="mx-auto mt-14 max-w-xl space-y-6">
+      <ol className="mx-auto mt-14 max-w-xl">
         {protect.items.map((it, i) => (
-          <li key={it.name}>
-            <Card item={it} index={i} />
+          <li key={it.name} data-deck className="sticky mb-8" style={{ top: `${88 + i * 14}px` }}>
+            <div data-deck-body className="relative origin-top will-change-transform">
+              <Card item={it} index={i} />
+              <div data-deck-dim className="pointer-events-none absolute inset-0 rounded-3xl bg-night opacity-0" />
+            </div>
           </li>
         ))}
       </ol>

@@ -37,7 +37,7 @@ export function CareersHero() {
         <img
           ref={img}
           src={photos.careers}
-          alt="The Shaw Stearns team at work"
+          alt="A project team meeting in an office above the city"
           fetchPriority="high"
           className="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover will-change-transform"
         />

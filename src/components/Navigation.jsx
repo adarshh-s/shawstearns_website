@@ -5,6 +5,7 @@ import { announcement, nav, site } from '../content/site'
 import { prefetch } from '../pages/loaders'
 import { lockScroll } from '../utils/scrollAnimations'
 import Icon from './ui/Icon'
+import LocalTime from './ui/LocalTime'
 import { Logo, Mark } from './ui/Logo'
 
 const EASE = [0.22, 1, 0.36, 1]
@@ -149,10 +150,24 @@ function MegaPanel({ item, onNavigate }) {
   )
 }
 
-/** Mobile: full-screen sheet with large items; items with menus slide to a sub-list. */
+// The sheet opens as a circle growing out of the menu button (top-right).
+const SHEET_ORIGIN = 'calc(100% - 40px) 36px'
+const itemIn = (i) => ({
+  initial: { opacity: 0, y: 28 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE, delay: 0.18 + i * 0.06 } },
+})
+
+/**
+ * Mobile: a dark full-screen sheet that grows from the menu button. Large numbered serif items
+ * stagger in; items with menus slide to a sub-list; the office, email and Dubai time sit below.
+ */
 function MobileSheet({ onClose }) {
   const [sub, setSub] = useState(null)
   const item = nav.find((n) => n.to === sub)
+  const { pathname } = useLocation()
+  const items = [{ to: '/', key: 'home', label: 'Home' }, ...nav]
+  const row = 'flex w-full items-center gap-4 py-3.5 text-left'
+  const label = 'flex-1 font-display text-[2.25rem] leading-none font-light tracking-[-0.01em]'
   return (
     <motion.div
       id="mobile-menu"
@@ -160,21 +175,25 @@ function MobileSheet({ onClose }) {
       aria-modal="true"
       aria-label="Site menu"
       data-lenis-prevent
-      className="fixed inset-0 z-[80] flex flex-col overflow-y-auto bg-mist"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[80] flex flex-col overflow-y-auto bg-night text-white"
+      initial={{ clipPath: `circle(0% at ${SHEET_ORIGIN})` }}
+      animate={{ clipPath: `circle(150% at ${SHEET_ORIGIN})`, transition: { duration: 0.75, ease: EASE } }}
+      exit={{ clipPath: `circle(0% at ${SHEET_ORIGIN})`, transition: { duration: 0.5, ease: [0.65, 0, 0.35, 1] } }}
     >
-      <div className="flex h-[72px] shrink-0 items-center justify-between px-5">
+      {/* soft navy glow, as on the dark sections */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-[20%] -right-[30%] h-[70vh] w-[110vw] bg-[radial-gradient(closest-side,rgba(34,53,91,0.9),transparent)]"
+      />
+      <div className="relative flex h-[72px] shrink-0 items-center justify-between px-5">
         <Link to="/" onClick={onClose} aria-label={`${site.name} — home`}>
-          <Logo className="h-4 text-navy" />
+          <Logo className="h-4 text-white" />
         </Link>
         <button
           type="button"
           onClick={onClose}
           aria-label="Close menu"
-          className="inline-flex size-10 items-center justify-center rounded-lg bg-black/[0.06]"
+          className="inline-flex size-10 items-center justify-center rounded-lg bg-white/10"
         >
           <Icon name="close" className="size-4" />
         </button>
@@ -185,64 +204,61 @@ function MobileSheet({ onClose }) {
           {!item ? (
             <motion.ul
               key="root"
-              className="px-5 pt-6"
-              initial={{ x: '-30%', opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: '-30%', opacity: 0 }}
-              transition={{ duration: 0.4, ease: EASE }}
+              className="px-5 pt-8"
+              exit={{ x: '-30%', opacity: 0, transition: { duration: 0.4, ease: EASE } }}
             >
-              {[{ to: '/', key: 'home', label: 'Home' }, ...nav].map((n) => (
-                <li key={n.to}>
-                  {n.menu ? (
-                    <button
-                      type="button"
-                      onClick={() => setSub(n.to)}
-                      className="flex w-full items-center justify-between py-3 text-left font-display text-[2.25rem] leading-tight font-light tracking-[-0.01em] text-navy"
-                    >
+              {items.map((n, i) => {
+                const current = n.to === '/' ? pathname === '/' : pathname.startsWith(n.to)
+                const inner = (
+                  <>
+                    <span className="w-6 font-serif text-sm text-gold-light italic">0{i + 1}</span>
+                    <span className={`${label} ${current ? 'text-white' : 'text-white/80'}`}>
                       {n.label}
-                      <Icon name="chevronRight" className="size-5 text-muted" />
-                    </button>
-                  ) : (
-                    <Link
-                      to={n.to}
-                      onClick={onClose}
-                      className="flex items-center justify-between py-3 font-display text-[2.25rem] leading-tight font-light tracking-[-0.01em] text-navy"
-                    >
-                      {n.label}
-                      <Icon name="chevronRight" className="size-5 text-muted" />
-                    </Link>
-                  )}
-                </li>
-              ))}
+                      {current && <span className="ml-2 inline-block size-1.5 -translate-y-2 rounded-full bg-gold-light" />}
+                    </span>
+                    <Icon name="chevronRight" className="size-5 text-white/40" />
+                  </>
+                )
+                return (
+                  <motion.li key={n.to} className="border-b border-white/10" {...itemIn(i)}>
+                    {n.menu ? (
+                      <button type="button" onClick={() => setSub(n.to)} className={row}>
+                        {inner}
+                      </button>
+                    ) : (
+                      <Link to={n.to} onClick={onClose} className={row}>
+                        {inner}
+                      </Link>
+                    )}
+                  </motion.li>
+                )
+              })}
             </motion.ul>
           ) : (
             <motion.div
               key="sub"
-              className="px-5 pt-4"
+              className="px-5 pt-6"
               initial={{ x: '30%', opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: '30%', opacity: 0 }}
               transition={{ duration: 0.4, ease: EASE }}
             >
-              <button type="button" onClick={() => setSub(null)} className="flex items-center gap-2 py-2 text-sm text-muted">
+              <button type="button" onClick={() => setSub(null)} className="flex items-center gap-2 py-2 text-sm text-white/60">
                 <Icon name="chevronLeft" className="size-4" /> Back
               </button>
-              <Link
-                to={item.to}
-                onClick={onClose}
-                className="mt-2 block font-display text-[2.25rem] leading-tight font-light tracking-[-0.01em] text-navy"
-              >
+              <Link to={item.to} onClick={onClose} className={`mt-2 flex items-center ${label}`}>
                 {item.label}
+                <Icon name="arrow" className="ml-3 size-5 text-gold-light" />
               </Link>
               {item.menu.groups.map((g) => (
-                <div key={g.title} className="mt-8">
-                  <p className="text-sm text-muted">{g.title}</p>
-                  <ul className="mt-3 space-y-1">
+                <div key={g.title} className="mt-9">
+                  <p className="label text-gold-light">{g.title}</p>
+                  <ul className="mt-3">
                     {g.links.map((l) => (
-                      <li key={l.to}>
-                        <Link to={l.to} onClick={onClose} className="flex items-center justify-between py-2 text-xl text-navy">
+                      <li key={l.to} className="border-b border-white/10">
+                        <Link to={l.to} onClick={onClose} className="flex items-center justify-between py-3.5 text-lg text-white/90">
                           {l.label}
-                          <Icon name="arrow" className="size-4 text-muted" />
+                          <Icon name="arrow" className="size-4 text-white/40" />
                         </Link>
                       </li>
                     ))}
@@ -254,22 +270,39 @@ function MobileSheet({ onClose }) {
         </AnimatePresence>
       </div>
 
-      <div className="m-4 grid grid-cols-2 gap-2 rounded-xl bg-white p-2">
-        <Link
-          to="/careers"
-          onClick={onClose}
-          className="flex h-12 items-center justify-center rounded-lg border border-navy/15 text-sm text-navy"
-        >
-          Careers
-        </Link>
-        <Link
-          to="/contact"
-          onClick={onClose}
-          className="flex h-12 items-center justify-center rounded-lg bg-navy text-sm text-white"
-        >
-          Request a discussion
-        </Link>
-      </div>
+      <motion.div className="relative px-5 pt-8 pb-4" {...itemIn(items.length)}>
+        <div className="grid grid-cols-2 gap-4 border-t border-white/10 pt-6 text-sm">
+          <div>
+            <p className="label text-gold-light">Office</p>
+            <p className="mt-2 leading-relaxed text-white/75">{site.office[0]}</p>
+          </div>
+          <div>
+            <p className="label text-gold-light">Dubai</p>
+            <p className="mt-2 font-display text-2xl font-light text-white tabular-nums">
+              <LocalTime />
+            </p>
+          </div>
+          <a href={`mailto:${site.email}`} className="col-span-2 text-white/90 underline decoration-white/25 underline-offset-4">
+            {site.email}
+          </a>
+        </div>
+        <div className="mt-6 grid grid-cols-2 gap-2">
+          <Link
+            to="/careers"
+            onClick={onClose}
+            className="flex h-12 items-center justify-center rounded-full border border-white/25 text-sm text-white"
+          >
+            Careers
+          </Link>
+          <Link
+            to="/contact"
+            onClick={onClose}
+            className="flex h-12 items-center justify-center rounded-full bg-white text-sm font-medium text-navy"
+          >
+            Request a discussion
+          </Link>
+        </div>
+      </motion.div>
     </motion.div>
   )
 }

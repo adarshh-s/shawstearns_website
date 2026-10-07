@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { home, services, videos } from '../content/site'
 import { prefetch } from '../pages/loaders'
 import { emphasize, stripMarkers } from '../utils/helpers'
-import { gsap, scrollToHash, useGSAP } from '../utils/scrollAnimations'
+import { gsap, MOTION_OK, scrollToHash, useGSAP } from '../utils/scrollAnimations'
 import Button, { ArrowBox } from './ui/Button'
 import Icon from './ui/Icon'
+import SnapCarousel from './ui/SnapCarousel'
 import VideoBg from './ui/VideoBg'
 
 const EASE = [0.22, 1, 0.36, 1]
@@ -236,33 +237,68 @@ function PinnedHero() {
   )
 }
 
-/** Phones and reduced motion: full video card, then the three service cards stacked. */
+/** One service as a footage card with its caption (phones and tablets). */
+function ServiceCard({ s, playing }) {
+  return (
+    <>
+      <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-night md:aspect-[5/4] md:rounded-2xl">
+        <div className="absolute inset-0">
+          <VideoBg video={videos[s.video]} playing={playing} label={`${s.title} video`} />
+        </div>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-night/60 via-transparent to-transparent md:hidden" />
+        <span className="glass absolute top-4 left-4 rounded-full px-3 py-1 font-serif text-sm italic md:hidden">{s.num}</span>
+      </div>
+      <div className="mt-6">
+        <ServiceCaption s={s} />
+      </div>
+    </>
+  )
+}
+
+/**
+ * Phones and reduced motion: full video card that settles back as you scroll (a small echo of
+ * the desktop shrink), then the services — a swipeable carousel on phones, a grid on tablets.
+ */
 function StaticHero() {
   const reduce = useReducedMotion()
   const [playing, setPlaying] = useState(!reduce)
+  const root = useRef(null)
+  const card = useRef(null)
+  const copy = useRef(null)
+  useGSAP(
+    () => {
+      gsap.matchMedia().add(MOTION_OK, () => {
+        const st = { trigger: root.current, start: 'top top', end: 'bottom top', scrub: 0.5 }
+        gsap.to(card.current, { scale: 0.9, yPercent: 6, ease: 'none', scrollTrigger: st })
+        gsap.to(copy.current, { opacity: 0, y: -40, ease: 'none', scrollTrigger: { ...st, end: '60% top' } })
+      })
+    },
+    { scope: root },
+  )
   return (
     <>
-      <section id="top" aria-labelledby="hero-title" className="bg-white p-3 pt-[7.5rem]">
-        <div className="relative h-[calc(100svh-8.5rem)] min-h-[560px] overflow-hidden rounded-[28px] bg-night">
+      <section ref={root} id="top" aria-labelledby="hero-title" className="overflow-hidden bg-white p-3 pt-[7.5rem]">
+        <div
+          ref={card}
+          className="relative h-[calc(100svh-8.5rem)] min-h-[560px] origin-top overflow-hidden rounded-[28px] bg-night will-change-transform"
+        >
           <div className="absolute inset-0">
             <VideoBg video={videos.home} playing={playing} label="hero video" />
           </div>
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-night/60 via-night/45 to-night/75" />
-          <HeroCopy />
+          <HeroCopy copyRef={copy} />
           <VideoToggle playing={playing} onToggle={() => setPlaying((p) => !p)} />
         </div>
       </section>
-      <section aria-label="Our services" className="bg-white px-5 py-20">
-        <div className="text-center">{servicesHead}</div>
-        <ul className="mt-12 space-y-14 md:grid md:grid-cols-3 md:gap-8 md:space-y-0">
+      <section aria-label="Our services" className="bg-white pt-16 pb-20 md:px-5">
+        <div className="px-5 text-center">{servicesHead}</div>
+        <SnapCarousel count={services.length} label="Our services" className="mt-10 md:hidden">
+          {(i, on) => <ServiceCard s={services[i]} playing={!reduce && on} />}
+        </SnapCarousel>
+        <ul className="mt-12 hidden gap-8 md:grid md:grid-cols-3">
           {services.map((s) => (
             <li key={s.slug}>
-              <div className="aspect-[5/4] overflow-hidden rounded-2xl bg-night">
-                <img src={videos[s.video].poster} alt="" loading="lazy" className="size-full object-cover" />
-              </div>
-              <div className="mt-6">
-                <ServiceCaption s={s} />
-              </div>
+              <ServiceCard s={s} playing={!reduce} />
             </li>
           ))}
         </ul>

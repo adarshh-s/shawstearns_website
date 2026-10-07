@@ -7,6 +7,7 @@ import Button from '../ui/Button'
 import DotWave from '../ui/DotWave'
 import Icon from '../ui/Icon'
 import Reveal, { fadeUpChild, staggerParent } from '../ui/Reveal'
+import SnapCarousel from '../ui/SnapCarousel'
 import SplitLines from '../ui/SplitLines'
 import VideoBg from '../ui/VideoBg'
 
@@ -71,7 +72,37 @@ export function ServicesHero() {
   )
 }
 
-/** Mercury pricing-style comparison: three discipline cards side by side, the middle one featured. */
+/** One discipline in the comparison: wave, title, summary, what's included, link. */
+function DisciplineCard({ s, featured, className = '' }) {
+  return (
+    <div
+      className={`flex h-full flex-col rounded-3xl border p-8 ${featured ? 'border-navy bg-navy text-white shadow-[0_40px_80px_-40px_rgba(34,53,91,0.7)]' : 'border-line bg-white'} ${className}`}
+    >
+      <div className="h-20">
+        <DotWave tone={featured ? 'light' : s.wave} />
+      </div>
+      <span className={`mt-6 font-serif italic ${featured ? 'text-gold-light' : 'text-gold'}`}>{s.num}</span>
+      <h3 className={`mt-2 text-[1.75rem] leading-tight ${featured ? '!text-white' : ''}`}>{s.title}</h3>
+      <p className={`mt-3 text-sm leading-relaxed ${featured ? 'text-white/75' : 'text-muted'}`}>{s.summary}</p>
+      <ul className={`mt-7 flex-1 space-y-3 border-t pt-7 text-sm ${featured ? 'border-white/15 text-white/85' : 'border-line text-ink'}`}>
+        {s.points.map((p) => (
+          <li key={p} className="flex gap-3">
+            <Icon name="check" className={`mt-0.5 size-4 shrink-0 ${featured ? 'text-gold-light' : 'text-gold'}`} />
+            {p}
+          </li>
+        ))}
+      </ul>
+      <Button href={`/services#${s.slug}`} variant={featured ? 'white' : 'navy'} className="mt-8 self-start">
+        Read more
+      </Button>
+    </div>
+  )
+}
+
+/**
+ * Mercury pricing-style comparison: three discipline cards side by side, the middle one featured.
+ * Phones and tablets swipe through them as a carousel.
+ */
 export function DisciplineCards() {
   return (
     <section aria-labelledby="disc-title" className="section-y bg-mist">
@@ -85,44 +116,22 @@ export function DisciplineCards() {
           />
         </div>
         <motion.ul
-          className="mt-16 grid items-stretch gap-4 lg:grid-cols-3"
+          className="mt-16 hidden items-stretch gap-4 lg:grid lg:grid-cols-3"
           variants={staggerParent(0.12)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '0px 0px -10% 0px' }}
         >
-          {services.map((s, i) => {
-            const featured = i === 1
-            return (
-              <motion.li
-                key={s.slug}
-                variants={fadeUpChild}
-                className={`flex flex-col rounded-3xl border p-8 ${featured ? 'border-navy bg-navy text-white shadow-[0_40px_80px_-40px_rgba(34,53,91,0.7)] lg:-my-4 lg:py-12' : 'border-line bg-white'}`}
-              >
-                <div className="h-20">
-                  <DotWave tone={featured ? 'light' : s.wave} />
-                </div>
-                <span className={`mt-6 font-serif italic ${featured ? 'text-gold-light' : 'text-gold'}`}>{s.num}</span>
-                <h3 className={`mt-2 text-[1.75rem] leading-tight ${featured ? '!text-white' : ''}`}>{s.title}</h3>
-                <p className={`mt-3 text-sm leading-relaxed ${featured ? 'text-white/75' : 'text-muted'}`}>{s.summary}</p>
-                <ul
-                  className={`mt-7 flex-1 space-y-3 border-t pt-7 text-sm ${featured ? 'border-white/15 text-white/85' : 'border-line text-ink'}`}
-                >
-                  {s.points.map((p) => (
-                    <li key={p} className="flex gap-3">
-                      <Icon name="check" className={`mt-0.5 size-4 shrink-0 ${featured ? 'text-gold-light' : 'text-gold'}`} />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-                <Button href={`/services#${s.slug}`} variant={featured ? 'white' : 'navy'} className="mt-8 self-start">
-                  Read more
-                </Button>
-              </motion.li>
-            )
-          })}
+          {services.map((s, i) => (
+            <motion.li key={s.slug} variants={fadeUpChild}>
+              <DisciplineCard s={s} featured={i === 1} className={i === 1 ? 'lg:-my-4 lg:py-12' : ''} />
+            </motion.li>
+          ))}
         </motion.ul>
       </div>
+      <SnapCarousel count={services.length} label="Our disciplines" className="mt-12 lg:hidden" itemClassName="w-[84%] sm:w-[58%]">
+        {(i) => <DisciplineCard s={services[i]} featured={i === 1} />}
+      </SnapCarousel>
     </section>
   )
 }

@@ -78,11 +78,13 @@ export function ContactMain() {
           <Reveal className="relative min-h-[300px] overflow-hidden rounded-3xl bg-night">
             <img
               src={photos.contact}
-              alt="Looking out over the city"
+              alt="The Dubai World Trade Centre tower"
               loading="lazy"
-              className="absolute inset-0 size-full object-cover"
+              className="absolute inset-0 size-full object-cover object-[50%_68%]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-night/80 via-night/10 to-transparent" />
+            {/* a light navy wash pulls the sky into the brand palette */}
+            <div className="absolute inset-0 bg-navy/25" />
+            <div className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/15 to-transparent" />
             <div className="absolute bottom-6 left-6 text-white">
               <p className="label text-gold-light">Our office</p>
               <p className="mt-2 font-display text-2xl font-light">{site.office[0]}</p>
