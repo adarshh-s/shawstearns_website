@@ -120,8 +120,9 @@ export const announcement = { label: 'We work with a limited number of clients',
 
 // Footage: a mix of work-relevant clips (skylines, construction, cost reporting, planning,
 // signing, client discussions) and a few calm nature-meets-city moments that echo the
-// client's original hero. The home hero is waves on a rocky shore at golden hour (Pexels
-// 39406920, crossfade-looped); the handshake is Pexels; the rest are Mixkit.
+// client's original hero. The home hero is a calm sunrise over the sea horizon (Pexels
+// 31601426, crossfade-looped); the handshake and the 3D stack's Palm Jumeirah aerial (Pexels
+// 19444055, graded navy-to-gold) are Pexels; the rest are Mixkit.
 export const videos = {
   home: { src1080: '/media/home-1080.mp4', src720: '/media/home-720.mp4', poster: '/media/home-poster.jpg' },
   // relevant
@@ -133,6 +134,7 @@ export const videos = {
   skyline: { src720: '/media/skyline-720.mp4', poster: '/media/skyline-poster.jpg' },
   businessbay: { src720: '/media/businessbay-720.mp4', poster: '/media/businessbay-poster.jpg' },
   cranes: { src720: '/media/cranes-720.mp4', poster: '/media/cranes-poster.jpg' },
+  site: { src720: '/media/site-720.mp4', poster: '/media/site-poster.jpg' },
   // calm
   dune: { src720: '/media/dune-720.mp4', poster: '/media/dune-poster.jpg' },
   meadow: { src720: '/media/meadow-720.mp4', poster: '/media/meadow-poster.jpg' },

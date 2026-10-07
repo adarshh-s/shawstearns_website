@@ -19,6 +19,17 @@ if (typeof window !== 'undefined') {
     debounce(() => ScrollTrigger.refresh(), 200),
   )
   window.addEventListener('load', () => ScrollTrigger.refresh())
+  // Late fonts, images and video metadata can change the page height after the triggers were
+  // measured, leaving pins to start/end in the wrong place (a blank gap after a pinned section).
+  // Re-measure whenever the document height actually changes, and once the fonts are in.
+  let measured = 0
+  ScrollTrigger.addEventListener('refresh', () => (measured = document.body.scrollHeight))
+  new ResizeObserver(
+    debounce(() => {
+      if (Math.abs(document.body.scrollHeight - measured) > 1) ScrollTrigger.refresh()
+    }, 250),
+  ).observe(document.body)
+  document.fonts?.ready.then(() => ScrollTrigger.refresh())
 }
 
 /* ───────────── Smooth scrolling (Lenis) driven by GSAP's ticker ─────────────

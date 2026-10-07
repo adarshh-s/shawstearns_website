@@ -101,6 +101,7 @@ const servicesHead = (
 function PinnedHero() {
   const root = useRef(null)
   const card = useRef(null)
+  const media = useRef(null)
   const slot = useRef(null)
   const copy = useRef(null)
   const shade = useRef(null)
@@ -127,6 +128,14 @@ function PinnedHero() {
         const { t, r, b, l } = box()
         return `inset(${t}px ${r}px ${b}px ${l}px round ${radius}px)`
       }
+      // The footage scales with the window (cover-fit into the slot) so the whole frame,
+      // horizon and all, lands in the first card rather than a corner of the sky.
+      const fit = () => {
+        const c = card.current.getBoundingClientRect()
+        const r = slot.current.getBoundingClientRect()
+        const s = Math.max(r.width / c.width, r.height / c.height)
+        return { s, x: r.left - c.left + (r.width - c.width * s) / 2, y: r.top - c.top + (r.height - c.height * s) / 2 }
+      }
 
       gsap.set(others, { opacity: 0, xPercent: 40 })
       gsap.set([head.current, ...captions], { opacity: 0, y: 24 })
@@ -146,6 +155,12 @@ function PinnedHero() {
       tl.to(copy.current, { opacity: 0, y: -30, duration: 0.3, ease: 'power1.in' }, 0)
         .to(cue.current, { opacity: 0, duration: 0.2 }, 0)
         .fromTo(card.current, { clipPath: 'inset(0px 0px 0px 0px round 28px)' }, { clipPath: clip(16), duration: 1 }, 0)
+        .fromTo(
+          media.current,
+          { x: 0, y: 0, scale: 1 },
+          { x: () => fit().x, y: () => fit().y, scale: () => fit().s, duration: 1, transformOrigin: '0% 0%' },
+          0,
+        )
         .to(shade.current, { opacity: 0.2, duration: 0.6 }, 0.25)
         .to(others, { opacity: 1, xPercent: 0, stagger: 0.12, duration: 0.6, ease: 'power3.out' }, 0.55)
         .to(head.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.7)
@@ -195,7 +210,7 @@ function PinnedHero() {
         ref={card}
         className="absolute top-[120px] left-3 h-[calc(100%-132px)] w-[calc(100%-24px)] overflow-hidden rounded-[28px] bg-night will-change-[clip-path]"
       >
-        <div className="absolute inset-0">
+        <div ref={media} className="absolute inset-0 will-change-transform">
           <VideoBg video={videos.home} playing={playing} label="hero video" />
         </div>
         <div
