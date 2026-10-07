@@ -103,6 +103,7 @@ function PinnedHero() {
   const root = useRef(null)
   const card = useRef(null)
   const media = useRef(null)
+  const pmLayer = useRef(null)
   const slot = useRef(null)
   const copy = useRef(null)
   const shade = useRef(null)
@@ -111,6 +112,9 @@ function PinnedHero() {
   const [playing, setPlaying] = useState(true)
   // The two side videos only decode once they have slid into view.
   const [revealed, setRevealed] = useState(false)
+  // Project Management footage starts as soon as the scroll begins, so it is already in motion
+  // (not a frozen first frame) by the time it fades in.
+  const [pmOn, setPmOn] = useState(false)
 
   useGSAP(
     () => {
@@ -150,7 +154,10 @@ function PinnedHero() {
           pin: true,
           scrub: 0.6,
           invalidateOnRefresh: true,
-          onUpdate: (self) => setRevealed(self.progress > 0.97),
+          onUpdate: (self) => {
+            setRevealed(self.progress > 0.97)
+            setPmOn(self.progress > 0.02)
+          },
         },
       })
       tl.to(copy.current, { opacity: 0, y: -30, duration: 0.3, ease: 'power1.in' }, 0)
@@ -162,6 +169,9 @@ function PinnedHero() {
           { x: () => fit().x, y: () => fit().y, scale: () => fit().s, duration: 1, transformOrigin: '0% 0%' },
           0,
         )
+        // The sunrise gives way to Project Management footage: the fade starts as the
+        // headline clears (0.3) and lands exactly as the card settles into its slot (1.0).
+        .fromTo(pmLayer.current, { opacity: 0 }, { opacity: 1, duration: 0.7, ease: 'power1.inOut' }, 0.3)
         .to(shade.current, { opacity: 0.2, duration: 0.6 }, 0.25)
         .to(others, { opacity: 1, xPercent: 0, stagger: 0.12, duration: 0.6, ease: 'power3.out' }, 0.55)
         .to(head.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.7)
@@ -212,7 +222,11 @@ function PinnedHero() {
         className="absolute top-[120px] left-3 h-[calc(100%-132px)] w-[calc(100%-24px)] overflow-hidden rounded-[28px] bg-night will-change-[clip-path]"
       >
         <div ref={media} className="absolute inset-0 will-change-transform">
-          <VideoBg video={videos.home} playing={playing} label="hero video" />
+          {/* the hero sunrise rests once the card has fully become the Project Management card */}
+          <VideoBg video={videos.home} playing={playing && !revealed} label="hero video" />
+          <div ref={pmLayer} className="absolute inset-0 opacity-0">
+            <VideoBg video={videos[first.video]} playing={playing && pmOn} label={`${first.title} video`} />
+          </div>
         </div>
         <div
           ref={shade}
