@@ -6,7 +6,7 @@ import { submitForm } from './forms/submit'
 import Icon from './ui/Icon'
 import Reveal from './ui/Reveal'
 
-function EnquiryForm() {
+export function EnquiryForm() {
   const empty = { name: '', email: '', phone: '', project: '', company: '', brief: '' }
   const [v, setV] = useState(empty)
   const [rfp, setRfp] = useState(null)
@@ -96,7 +96,7 @@ function EnquiryForm() {
 }
 
 /** Dubai local time, refreshed each half-minute. */
-function LocalTime() {
+export function LocalTime() {
   const [now, setNow] = useState(() => new Date())
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 30_000)
@@ -108,31 +108,47 @@ function LocalTime() {
 /** Contact details, office map and the enquiry form. */
 export default function ContactSection() {
   return (
-    <section aria-label="Contact details and enquiry form" className="bg-white px-5 pb-24 sm:px-8">
-      <div className="grid gap-12 border-t border-line pt-14 lg:grid-cols-12 lg:gap-16">
-        <div className="space-y-10 lg:col-span-4">
+    <section
+      aria-labelledby="contact-form-title"
+      className="relative overflow-hidden bg-night px-3 pt-24 pb-28 text-white sm:px-[30px] md:pt-32 md:pb-40"
+    >
+      <div
+        aria-hidden="true"
+        className="absolute top-0 left-1/2 h-[45vh] w-[70vw] -translate-x-1/2 rounded-full bg-navy/70 blur-[120px]"
+      />
+      <div className="relative mx-auto max-w-[1400px]">
+        <div className="mx-auto max-w-2xl px-2 text-center">
+          <p className="label text-gold-light">Confidential by default</p>
+          <h2
+            id="contact-form-title"
+            className="mt-4 text-[length:var(--text-h2)] leading-[1.08] !text-white [&_.accent-italic]:!text-gold-light"
+          >
+            Request a confidential <em className="accent-italic">discussion</em>.
+          </h2>
+        </div>
+
+        <ul className="mt-16 grid gap-3 md:grid-cols-3">
           {contact.details.map((d, i) => (
-            <Reveal key={d.label} delay={i * 0.06} className="flex gap-4">
-              <span className="inline-flex size-10 shrink-0 items-center justify-center bg-navy text-white">
+            <Reveal
+              as="li"
+              key={d.label}
+              delay={i * 0.06}
+              className="flex gap-4 rounded-3xl border border-white/12 bg-[linear-gradient(160deg,rgba(255,255,255,0.09),rgba(255,255,255,0.02))] p-7"
+            >
+              <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-gold-light/40 text-gold-light">
                 <Icon name={d.icon} className="size-4" />
               </span>
               <div>
-                <p className="label text-gold-ink">{d.label}</p>
+                <p className="label text-gold-light">{d.label}</p>
                 {d.lines.map((l, j) =>
                   d.href && j === 0 ? (
-                    <a
-                      key={l}
-                      href={d.href}
-                      className="link-underline mt-2 block font-display text-xl font-light tracking-[-0.01em] text-navy"
-                    >
+                    <a key={l} href={d.href} className="link-underline mt-2 block font-display text-xl font-light text-white">
                       {l}
                     </a>
                   ) : (
                     <p
                       key={l}
-                      className={
-                        j === 0 ? 'mt-2 font-display text-xl font-light tracking-[-0.01em] text-navy' : 'mt-1 text-sm text-muted'
-                      }
+                      className={j === 0 ? 'mt-2 font-display text-xl font-light text-white' : 'mt-1 text-sm text-white/65'}
                     >
                       {l}
                     </p>
@@ -141,21 +157,24 @@ export default function ContactSection() {
               </div>
             </Reveal>
           ))}
-          <Reveal delay={0.2} className="relative aspect-[4/3] overflow-hidden bg-mist">
+        </ul>
+
+        <div className="mt-3 grid gap-3 lg:grid-cols-12">
+          <div className="rounded-3xl bg-white p-6 text-ink sm:p-10 lg:col-span-7">
+            <EnquiryForm />
+          </div>
+          <Reveal delay={0.1} className="relative min-h-[360px] overflow-hidden rounded-3xl border border-white/12 lg:col-span-5">
             <iframe
               title="Map showing the Shaw Stearns office at Trade Centre First, Dubai"
               src={`https://maps.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&z=14&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="absolute inset-0 size-full grayscale-[0.6]"
+              className="absolute inset-0 size-full grayscale-[0.7] invert-[0.88] hue-rotate-180"
             />
-            <span className="label glass absolute bottom-3 left-3 !border-white/40 !bg-navy/70 px-3 py-1.5 !text-[0.5625rem]">
+            <span className="label glass absolute bottom-4 left-4 rounded-full !border-white/30 !bg-night/70 px-3 py-1.5 !text-[0.5625rem]">
               Dubai · <LocalTime /> local
             </span>
           </Reveal>
-        </div>
-        <div className="lg:col-span-7 lg:col-start-6">
-          <EnquiryForm />
         </div>
       </div>
     </section>

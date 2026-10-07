@@ -10,22 +10,30 @@ const SPANS = ['lg:col-span-7', 'lg:col-span-5', 'lg:col-span-5', 'lg:col-span-7
  * "Why clients choose" — Origin-inspired: large rounded cards filled with calm footage and a
  * big serif-italic line, on the same dark field as the statement above.
  */
-export default function Pillars() {
-  const { difference } = home
+export default function Pillars({
+  id = 'difference',
+  label = home.difference.label,
+  title = home.difference.title,
+  items = home.difference.items,
+}) {
   const reduce = useReducedMotion()
   return (
-    <section id="difference" aria-labelledby="difference-title" className="bg-night px-3 pb-28 text-white sm:px-[30px] md:pb-40">
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className="bg-night px-3 pt-24 pb-28 md:pt-32 text-white sm:px-[30px] md:pb-40"
+    >
       <div className="mx-auto max-w-2xl px-2 pt-4 text-center">
-        <p className="label text-gold-light">{difference.label}</p>
+        <p className="label text-gold-light">{label}</p>
         <SplitLines
-          id="difference-title"
-          lines={[difference.title]}
+          id={`${id}-title`}
+          lines={[title]}
           className="mt-5 text-[length:var(--text-h2)] leading-[1.08] !text-white [&_.accent-italic]:!text-gold-light"
         />
       </div>
 
       <ul className="mx-auto mt-16 grid max-w-[1400px] gap-4 lg:grid-cols-12">
-        {difference.items.map((item, i) => (
+        {items.map((item, i) => (
           <motion.li
             key={item.title}
             className={SPANS[i]}

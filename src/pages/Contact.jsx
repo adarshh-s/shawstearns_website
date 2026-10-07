@@ -1,18 +1,16 @@
-import { contact, photos } from '../content/site'
 import Page from '../components/Page'
-import PageHero from '../components/PageHero'
-import ContactSection from '../components/ContactSection'
+import { ContactHeader, ContactMain } from '../components/inner/ContactSections'
+import VideoBanner from '../components/VideoBanner'
 
 export default function Contact() {
-  const { hero } = contact
   return (
     <Page
       title="Contact"
       description="Start a conversation. We offer private discussions to explore whether Shaw Stearns is the right partner for your project."
     >
-      <PageHero label={hero.label} title={hero.title} sub={hero.sub} image={photos.contact} />
-      <div className="h-16 bg-white" />
-      <ContactSection />
+      <ContactHeader />
+      <ContactMain />
+      <VideoBanner />
     </Page>
   )
 }

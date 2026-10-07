@@ -279,18 +279,22 @@ export const about = {
   principles: [
     {
       title: 'Why pure client-side matters',
+      video: 'handshake',
       body: 'When advisors have relationships with contractors, suppliers or design firms, their advice can become compromised. Shaw Stearns has none. Our only interest is yours — protecting capital, programme and reputation without conflict.',
     },
     {
       title: 'Professional standards',
+      video: 'signing',
       body: 'All work is conducted in accordance with the standards of the Royal Institution of Chartered Surveyors (RICS) and the Chartered Institute of Building (CIOB). Integrity, independence and professional conduct are non-negotiable.',
     },
     {
       title: 'Our mission',
+      video: 'skyline',
       body: 'To protect the capital, programme and reputation of owners and developers through pure independent client-side advice — and to build a practice of lasting international standing.',
     },
     {
       title: 'Our ethos',
+      video: 'window',
       body: 'We exist solely for the client. Independence is our mandate. Standards are never compromised. We are ambitious for the practice, but never at the expense of quality or independence.',
     },
   ],

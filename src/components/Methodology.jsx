@@ -30,19 +30,23 @@ export default function Methodology() {
   }
 
   return (
-    <section id="methodology" aria-labelledby="method-title" className="section-y bg-mist">
+    <section id="methodology" aria-labelledby="method-title" className="section-y bg-night text-white">
       <div className="container-x">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="label text-gold-ink">{method.label}</p>
-          <SplitLines id="method-title" lines={[method.title]} className="mt-4 text-[length:var(--text-h2)] leading-[1.05]" />
-          <Reveal as="p" delay={0.1} className="mx-auto mt-5 max-w-xl leading-relaxed text-muted">
+          <p className="label text-gold-light">{method.label}</p>
+          <SplitLines
+            id="method-title"
+            lines={[method.title]}
+            className="mt-4 text-[length:var(--text-h2)] leading-[1.05] !text-white [&_.accent-italic]:!text-gold-light"
+          />
+          <Reveal as="p" delay={0.1} className="mx-auto mt-5 max-w-xl leading-relaxed text-white/70">
             {method.intro}
           </Reveal>
         </div>
 
         {/* Tabs with a progress rail */}
         <div className="relative mt-14">
-          <div aria-hidden="true" className="absolute top-[1.35rem] right-[6%] left-[6%] hidden h-px bg-navy/15 md:block">
+          <div aria-hidden="true" className="absolute top-[1.35rem] right-[6%] left-[6%] hidden h-px bg-white/15 md:block">
             <motion.div
               className="h-full origin-left bg-gold"
               animate={{ scaleX: active / (n - 1) }}
@@ -72,16 +76,16 @@ export default function Methodology() {
                   <span
                     className={`relative z-10 inline-flex size-11 items-center justify-center rounded-full border font-display text-lg font-light transition-colors duration-300 ${
                       on
-                        ? 'border-navy bg-navy text-white'
+                        ? 'border-gold-light bg-gold-light text-navy'
                         : i < active
-                          ? 'border-gold bg-white text-gold-ink'
-                          : 'border-navy/20 bg-mist text-navy group-hover:border-navy'
+                          ? 'border-gold-light/60 bg-night text-gold-light'
+                          : 'border-white/25 bg-night text-white group-hover:border-white'
                     }`}
                   >
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span
-                    className={`label !text-[0.5625rem] transition-colors ${on ? 'text-navy' : 'text-muted group-hover:text-navy'}`}
+                    className={`label !text-[0.5625rem] transition-colors ${on ? 'text-white' : 'text-white/55 group-hover:text-white'}`}
                   >
                     {s.name}
                   </span>
@@ -93,13 +97,18 @@ export default function Methodology() {
 
         {/* Stakeholders run through every stage */}
         <div aria-hidden="true" className="relative mt-10 h-24">
-          <DotWave tone="slate" density={0.9} speed={0.6} />
+          <DotWave tone="light" density={0.9} speed={0.6} />
           <span className="label absolute top-1/2 left-1/2 -translate-1/2 bg-gold-ink px-3 py-1.5 !text-[0.5625rem] text-white">
             Stakeholders
           </span>
         </div>
 
-        <div id="method-panel" role="tabpanel" aria-labelledby={`method-tab-${active}`} className="mt-8 bg-navy text-white">
+        <div
+          id="method-panel"
+          role="tabpanel"
+          aria-labelledby={`method-tab-${active}`}
+          className="mt-8 overflow-hidden rounded-3xl border border-white/12 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))] text-white"
+        >
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={active}

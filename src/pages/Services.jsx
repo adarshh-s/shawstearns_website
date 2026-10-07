@@ -1,21 +1,20 @@
-import { servicesPage, videos } from '../content/site'
 import Page from '../components/Page'
-import PageHero from '../components/PageHero'
-import StackingDisciplines from '../components/StackingDisciplines'
+import { DisciplineCards, DisciplineRows, ServicesHero } from '../components/inner/ServicesSections'
 import Methodology from '../components/Methodology'
-import CtaBand from '../components/CtaBand'
+import VideoBanner from '../components/VideoBanner'
 
 export default function Services() {
-  const { hero } = servicesPage
   return (
     <Page
       title="Services"
       description="Project Management, Cost Management & Quantity Surveying and Development Advisory — delivered with clarity, discipline and complete independence."
     >
-      <PageHero label={hero.label} title={hero.title} sub={hero.sub} video={videos.businessbay} />
-      <StackingDisciplines />
+      <ServicesHero />
+      <DisciplineCards />
+      <DisciplineRows />
       <Methodology />
-      <CtaBand />
+      <div className="h-24 bg-white md:h-32" />
+      <VideoBanner />
     </Page>
   )
 }

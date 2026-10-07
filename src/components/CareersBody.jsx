@@ -5,10 +5,9 @@ import { emphasize } from '../utils/helpers'
 import { Field, FileField, fileTooBig, isEmail, MAX_FILE_MB } from './forms/Field'
 import { FormShell, SubmitButton } from './forms/FormShell'
 import { submitForm } from './forms/submit'
-import Icon from './ui/Icon'
 import Reveal, { fadeUpChild, staggerParent } from './ui/Reveal'
 
-function ApplicationForm() {
+export function ApplicationForm() {
   const empty = { name: '', email: '', phone: '', note: '' }
   const [v, setV] = useState(empty)
   const [cv, setCv] = useState(null)
@@ -100,60 +99,66 @@ function ApplicationForm() {
   )
 }
 
-/** Careers: practice intro, what we offer, and the application form. */
+/** Careers: what we offer as dark glass cards, then the application form in a white card. */
 export default function CareersBody() {
   return (
-    <>
-      <section aria-labelledby="join-title" className="section-y bg-white">
-        <div className="container-x grid gap-14 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <p id="join-title" className="label text-gold-ink">
-              {careers.join.label}
-            </p>
-            <Reveal
-              as="p"
-              className="mt-5 font-display text-[clamp(1.5rem,1.25rem+0.8vw,2rem)] leading-[1.35] font-light text-navy"
-            >
-              {careers.join.body}
-            </Reveal>
-          </div>
-          <div className="lg:col-span-6 lg:col-start-7">
-            <p className="label text-gold-ink">{careers.offer.label}</p>
-            <motion.ul
-              className="mt-5 border-t border-navy/15"
-              variants={staggerParent(0.07)}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-            >
-              {careers.offer.items.map((o) => (
-                <motion.li key={o} variants={fadeUpChild} className="flex gap-4 border-b border-navy/15 py-5 text-navy">
-                  <Icon name="check" className="mt-0.5 size-4 shrink-0 text-gold" />
-                  {o}
-                </motion.li>
-              ))}
-            </motion.ul>
-            <Reveal as="p" className="mt-8 leading-relaxed text-muted">
-              {careers.closing}
-            </Reveal>
-          </div>
+    <section
+      aria-labelledby="offer-title"
+      className="relative overflow-hidden bg-night px-3 pt-8 pb-28 text-white sm:px-[30px] md:pb-40"
+    >
+      <div
+        aria-hidden="true"
+        className="absolute top-[30%] left-1/2 h-[50vh] w-[70vw] -translate-x-1/2 rounded-full bg-navy/70 blur-[120px]"
+      />
+      <div className="relative mx-auto max-w-[1400px]">
+        <div className="mx-auto max-w-2xl px-2 text-center">
+          <p className="label text-gold-light">{careers.offer.label}</p>
+          <h2
+            id="offer-title"
+            className="mt-4 text-[length:var(--text-h2)] leading-[1.08] !text-white [&_.accent-italic]:!text-gold-light"
+          >
+            {emphasize('What we *offer*.')}
+          </h2>
         </div>
-      </section>
 
-      <section aria-labelledby="apply-title" className="bg-mist py-20 md:py-28">
-        <div className="container-x grid gap-14 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <p className="label text-gold-ink">{careers.apply.label}</p>
-            <h2 id="apply-title" className="mt-4 text-[length:var(--text-h2)] leading-[1.05]">
+        <motion.ul
+          className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+          variants={staggerParent(0.08)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+        >
+          {careers.offer.items.map((o, i) => (
+            <motion.li
+              key={o}
+              variants={fadeUpChild}
+              className="group flex min-h-48 flex-col justify-between rounded-3xl border border-white/12 bg-[linear-gradient(160deg,rgba(255,255,255,0.09),rgba(255,255,255,0.02))] p-7 transition-colors duration-500 hover:border-gold-light/50"
+            >
+              <span className="font-serif text-gold-light italic">0{i + 1}</span>
+              <p className="mt-8 font-display text-[1.375rem] leading-snug font-light text-white">{o}</p>
+            </motion.li>
+          ))}
+        </motion.ul>
+        <Reveal as="p" className="mx-auto mt-12 max-w-2xl text-center leading-relaxed text-white/70">
+          {careers.closing}
+        </Reveal>
+
+        <div id="apply" className="mt-28 grid gap-12 lg:grid-cols-12">
+          <div className="px-2 lg:col-span-4">
+            <p className="label text-gold-light">{careers.apply.label}</p>
+            <h2
+              id="apply-title"
+              className="mt-4 text-[length:var(--text-h2)] leading-[1.05] !text-white [&_.accent-italic]:!text-gold-light"
+            >
               {emphasize(careers.apply.title)}
             </h2>
-            <p className="mt-5 leading-relaxed text-muted">{careers.apply.body}</p>
+            <p className="mt-5 leading-relaxed text-white/70">{careers.apply.body}</p>
           </div>
-          <div className="bg-white p-6 sm:p-10 lg:col-span-7 lg:col-start-6">
+          <div className="rounded-3xl bg-white p-6 text-ink sm:p-10 lg:col-span-7 lg:col-start-6">
             <ApplicationForm />
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }

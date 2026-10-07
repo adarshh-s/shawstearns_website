@@ -39,21 +39,28 @@ function Laurel({ flip }) {
  * Origin-inspired statement: calm dark field with a soft glow rising from below; one large
  * sentence whose words fill in as it scrolls (Scale-style), then quiet credential marks.
  */
-export default function Statement() {
+export default function Statement({
+  id = 'statement',
+  label = home.intro.label,
+  text = lead,
+  body = home.intro.body,
+  cta = home.intro.cta,
+  marks = true,
+}) {
   const root = useRef(null)
-  const text = useRef(null)
+  const textRef = useRef(null)
 
   useGSAP(
     () => {
       gsap.matchMedia().add(MOTION_OK, () => {
         gsap.fromTo(
-          gsap.utils.toArray('[data-word]', text.current),
+          gsap.utils.toArray('[data-word]', textRef.current),
           { opacity: 0.18 },
           {
             opacity: 1,
             stagger: 0.05,
             ease: 'none',
-            scrollTrigger: { trigger: text.current, start: 'top 80%', end: 'bottom 45%', scrub: true },
+            scrollTrigger: { trigger: textRef.current, start: 'top 80%', end: 'bottom 45%', scrub: true },
           },
         )
       })
@@ -63,9 +70,9 @@ export default function Statement() {
 
   return (
     <section
-      id="statement"
+      id={id}
       ref={root}
-      aria-labelledby="statement-title"
+      aria-labelledby={`${id}-title`}
       className="relative overflow-hidden bg-night py-32 text-white md:py-44"
     >
       {/* soft horizon glow */}
@@ -75,15 +82,15 @@ export default function Statement() {
       />
       <div className="container-x relative mx-auto max-w-5xl text-center">
         <Reveal as="p" className="label text-gold-light">
-          {home.intro.label}
+          {label}
         </Reveal>
         <h2
-          id="statement-title"
-          ref={text}
-          aria-label={lead}
+          id={`${id}-title`}
+          ref={textRef}
+          aria-label={text}
           className="mt-8 text-[clamp(1.875rem,1.3rem+2.1vw,3.25rem)] leading-[1.22] !text-white"
         >
-          {lead.split(' ').map((w, i) => (
+          {text.split(' ').map((w, i) => (
             <span key={i} aria-hidden="true">
               <span data-word className="inline-block">
                 {w}
@@ -91,31 +98,37 @@ export default function Statement() {
             </span>
           ))}
         </h2>
-        <Reveal as="p" delay={0.1} className="mx-auto mt-10 max-w-xl leading-relaxed text-white/70">
-          {home.intro.body}
-        </Reveal>
-        <Reveal delay={0.15} className="mt-10">
-          <Link
-            to={home.intro.cta.to}
-            className="group inline-flex items-center gap-3 rounded-md bg-white px-5 py-2.5 text-sm font-medium text-navy"
-          >
-            {home.intro.cta.label}
-            <Icon name="arrow" className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
-        </Reveal>
+        {body && (
+          <Reveal as="p" delay={0.1} className="mx-auto mt-10 max-w-xl leading-relaxed text-white/70">
+            {body}
+          </Reveal>
+        )}
+        {cta && (
+          <Reveal delay={0.15} className="mt-10">
+            <Link
+              to={cta.to}
+              className="group inline-flex items-center gap-3 rounded-md bg-white px-5 py-2.5 text-sm font-medium text-navy"
+            >
+              {cta.label}
+              <Icon name="arrow" className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </Reveal>
+        )}
 
-        <Reveal delay={0.2} className="mt-20 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
-          {MARKS.map(([a, b]) => (
-            <div key={a} className="flex items-center gap-2">
-              <Laurel />
-              <div className="leading-tight">
-                <p className="font-display text-lg text-white">{a}</p>
-                <p className="label !text-[0.5rem] text-white/60">{b}</p>
+        {marks && (
+          <Reveal delay={0.2} className="mt-20 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+            {MARKS.map(([a, b]) => (
+              <div key={a} className="flex items-center gap-2">
+                <Laurel />
+                <div className="leading-tight">
+                  <p className="font-display text-lg text-white">{a}</p>
+                  <p className="label !text-[0.5rem] text-white/60">{b}</p>
+                </div>
+                <Laurel flip />
               </div>
-              <Laurel flip />
-            </div>
-          ))}
-        </Reveal>
+            ))}
+          </Reveal>
+        )}
       </div>
     </section>
   )
