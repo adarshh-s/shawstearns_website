@@ -63,11 +63,16 @@ export default function Cursor() {
     const onUp = (e) => onOver(e)
     const onLeave = () => setVisible(false)
 
-    const tick = () => {
-      // Ring eases towards the pointer; scale eases towards its target.
-      rx += (x - rx) * 0.16
-      ry += (y - ry) * 0.16
-      scale += (targetScale - scale) * 0.18
+    let last = performance.now()
+    const tick = (now) => {
+      // Ring eases towards the pointer; scale eases towards its target. The easing is scaled by
+      // the frame time so the ring trails by the same amount at 60 Hz, 120 Hz or a slow frame.
+      const dt = Math.min(64, now - last) / 16.67
+      last = now
+      const follow = 1 - Math.pow(1 - 0.22, dt)
+      rx += (x - rx) * follow
+      ry += (y - ry) * follow
+      scale += (targetScale - scale) * (1 - Math.pow(1 - 0.18, dt))
       ring.current.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${scale})`
       raf = requestAnimationFrame(tick)
     }
@@ -93,15 +98,19 @@ export default function Cursor() {
   // No blend modes: a full-screen mix-blend layer forces the page to be re-blended every
   // frame. A navy stroke with a faint white halo reads on both light and dark sections.
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[2147483647]">
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-2147483647">
       <div
         ref={ring}
         className="absolute top-0 left-0 size-8 rounded-full border border-navy/50 opacity-0 shadow-[0_0_0_1px_rgba(255,255,255,0.35)] transition-opacity duration-300 will-change-transform"
       />
+      {/* The outer element only moves; the hover growth lives on the inner dot. (A `scale` on
+          the moved element would also scale its translate, pushing the dot away from the ring.) */}
       <div
         ref={dot}
-        className="absolute top-0 left-0 size-2 rounded-full bg-gold opacity-0 shadow-[0_0_0_1px_rgba(255,255,255,0.5)] transition-[opacity,scale] duration-300 will-change-transform data-[state=link]:scale-125"
-      />
+        className="group absolute top-0 left-0 opacity-0 transition-opacity duration-300 will-change-transform"
+      >
+        <span className="block size-2 rounded-full bg-gold shadow-[0_0_0_1px_rgba(255,255,255,0.5)] transition-transform duration-300 group-data-[state=link]:scale-125" />
+      </div>
     </div>
   )
 }

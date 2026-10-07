@@ -187,7 +187,7 @@ function MobileSheet({ onClose }) {
       />
       <div className="relative flex h-[72px] shrink-0 items-center justify-between px-5">
         <Link to="/" onClick={onClose} aria-label={`${site.name} — home`}>
-          <Logo className="h-4 text-white" />
+          <Logo className="h-[22px] text-white" />
         </Link>
         <button
           type="button"
@@ -423,7 +423,7 @@ export default function Navigation() {
         <div className="flex h-[72px] items-center justify-between px-5 sm:px-6">
           <div className="flex items-center gap-10">
             <Link to="/" aria-label={`${site.name} — home`} onMouseEnter={() => prefetch('home')}>
-              <Logo className="h-[17px]" />
+              <Logo className="h-[22px] lg:h-[26px]" />
             </Link>
             <nav aria-label="Primary" className="hidden lg:block">
               <ul className="flex items-center gap-7 text-sm">
@@ -436,20 +436,31 @@ export default function Navigation() {
                   return (
                     <li key={item.to} onMouseEnter={() => (item.menu ? hoverOpen(item.to) : hoverClose())}>
                       {item.menu ? (
-                        <button
-                          type="button"
-                          aria-expanded={open === item.to}
-                          aria-controls="mega-panel"
-                          onClick={() => setOpen(open === item.to ? null : item.to)}
-                          onFocus={() => prefetch(item.key)}
-                          className={cls}
-                        >
-                          {item.label}
-                          <Icon
-                            name="chevronRight"
-                            className={`size-3 transition-transform duration-300 ${open === item.to ? '-rotate-90' : 'rotate-90'}`}
-                          />
-                        </button>
+                        // The label goes to the page (hover opens the panel); the chevron toggles
+                        // the panel for keyboard and touch, where there is no hover.
+                        <span className={`flex items-center ${dim ? 'opacity-45' : 'opacity-100'} transition-opacity duration-300`}>
+                          <NavLink
+                            to={item.to}
+                            onClick={() => setOpen(null)}
+                            onFocus={() => prefetch(item.key)}
+                            className={`py-6 ${active ? 'underline decoration-gold underline-offset-[6px]' : ''}`}
+                          >
+                            {item.label}
+                          </NavLink>
+                          <button
+                            type="button"
+                            aria-expanded={open === item.to}
+                            aria-controls="mega-panel"
+                            aria-label={`${open === item.to ? 'Hide' : 'Show'} ${item.label} menu`}
+                            onClick={() => setOpen(open === item.to ? null : item.to)}
+                            className="-mr-2 inline-flex size-7 items-center justify-center rounded-md"
+                          >
+                            <Icon
+                              name="chevronRight"
+                              className={`size-3 transition-transform duration-300 ${open === item.to ? '-rotate-90' : 'rotate-90'}`}
+                            />
+                          </button>
+                        </span>
                       ) : (
                         <NavLink to={item.to} onMouseEnter={() => prefetch(item.key)} className={cls}>
                           {item.label}
