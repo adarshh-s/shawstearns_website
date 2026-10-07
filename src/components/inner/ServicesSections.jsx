@@ -54,7 +54,7 @@ export function ServicesHero() {
           </motion.div>
         </div>
         <motion.div
-          className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-night lg:col-span-6 lg:aspect-[5/6]"
+          className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-night lg:col-span-6 lg:aspect-[5/6] lg:max-h-[calc(100svh-11rem)] lg:w-full"
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.3, ease: EASE, delay: 0.3 }}

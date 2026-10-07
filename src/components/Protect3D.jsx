@@ -340,25 +340,25 @@ function Pinned() {
           aria-hidden="true"
           className="absolute top-1/2 right-[2%] h-[90vh] w-[62vw] -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(34,53,91,0.95),rgba(34,53,91,0.4)_55%,transparent)]"
         />
-        <div className="container-x relative grid h-full grid-cols-12 items-center gap-10 pt-16">
+        <div className="container-x relative grid h-full grid-cols-12 items-center gap-10 pt-16 short:pt-14">
           {/* Copy */}
           <div className="col-span-5">
             <p className="label text-gold-light">{protect.label}</p>
             <h2
               id="protect3d-title"
-              className="mt-4 text-[clamp(2rem,1.4rem+1.8vw,3.25rem)] leading-[1.08] !text-white [&_.accent-italic]:!text-gold-light"
+              className="mt-4 text-[clamp(2rem,1.4rem+1.8vw,3.25rem)] leading-[1.08] !text-white short:mt-3 short:text-[clamp(1.75rem,1.2rem+1.6vw,2.6rem)] [&_.accent-italic]:!text-gold-light"
             >
               {emphasize(protect.title)}
             </h2>
 
-            <ol className="mt-9 space-y-1">
+            <ol className="mt-9 space-y-1 short:mt-5 short:space-y-0">
               {protect.items.map((it, i) => (
                 <li key={it.name}>
                   <button
                     type="button"
                     data-row
                     onClick={() => jump(i)}
-                    className="group w-full rounded-xl px-4 py-3 text-left text-white/50 transition-colors duration-300 hover:text-white [&.is-active]:bg-white/[0.07] [&.is-active]:text-white"
+                    className="group w-full rounded-xl px-4 py-3 text-left short:py-2 text-white/50 transition-colors duration-300 hover:text-white [&.is-active]:bg-white/[0.07] [&.is-active]:text-white"
                   >
                     <span className="flex items-center gap-4">
                       <span className="font-display text-sm text-gold-light">0{i + 1}</span>
@@ -372,11 +372,11 @@ function Pinned() {
               ))}
             </ol>
 
-            <div className="relative mt-8 grid">
+            <div className="relative mt-8 grid short:mt-5">
               {protect.items.map((it) => (
                 <div key={it.name} data-detail className="col-start-1 row-start-1">
-                  <h3 className="text-2xl !text-white [&_.accent-italic]:!text-gold-light">{emphasize(it.title)}</h3>
-                  <ul className="mt-4 space-y-2">
+                  <h3 className="text-2xl !text-white short:text-xl [&_.accent-italic]:!text-gold-light">{emphasize(it.title)}</h3>
+                  <ul className="mt-4 space-y-2 short:mt-3 short:space-y-1.5">
                     {it.points.map((p) => (
                       <li key={p} className="flex gap-3 text-sm leading-relaxed text-white/80">
                         <Icon name="check" className="mt-0.5 size-4 shrink-0 text-gold-light" />
@@ -384,7 +384,7 @@ function Pinned() {
                       </li>
                     ))}
                   </ul>
-                  <Link to={it.link.to} className="group mt-5 inline-flex items-center gap-2 text-sm font-medium text-white">
+                  <Link to={it.link.to} className="group mt-5 inline-flex items-center gap-2 text-sm font-medium text-white short:mt-3">
                     <span className="link-underline">{it.link.label}</span>
                     <Icon name="arrow" className="size-3.5 transition-transform group-hover:translate-x-1" />
                   </Link>
@@ -392,7 +392,7 @@ function Pinned() {
               ))}
               <div data-finale className="col-start-1 row-start-1">
                 <p className="label text-gold-light">All three, together</p>
-                <h3 className="mt-3 text-2xl !text-white [&_.accent-italic]:!text-gold-light">
+                <h3 className="mt-3 text-2xl !text-white short:text-xl [&_.accent-italic]:!text-gold-light">
                   {emphasize(servicesPage.method.title)}
                 </h3>
                 <p className="mt-3 max-w-md text-sm leading-relaxed text-white/75">{cta.body}</p>
@@ -405,7 +405,7 @@ function Pinned() {
 
           {/* Scene: isometric glass stack. Only transforms animate (60 fps). */}
           <div aria-hidden="true" className="col-span-7 flex justify-center [perspective:2200px]">
-            <div className="relative aspect-[3/2] w-[min(36vw,520px)] [transform-style:preserve-3d] [transform:translate(-6%,24%)_rotateX(58deg)]">
+            <div className="relative aspect-[3/2] w-[min(36vw,520px,62svh)] [transform-style:preserve-3d] [transform:translate(-6%,24%)_rotateX(58deg)]">
               <div data-scene className="absolute inset-0 [transform-style:preserve-3d]">
                 {/* dotted floor grid */}
                 <div className="absolute -inset-[45%] rounded-[40px] [background-image:radial-gradient(rgba(255,255,255,0.16)_1px,transparent_1.2px)] [background-size:26px_26px] [mask-image:radial-gradient(closest-side,#000_35%,transparent)] [transform:translateZ(-30px)]" />

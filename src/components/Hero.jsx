@@ -187,28 +187,28 @@ function PinnedHero() {
       id="top"
       ref={root}
       aria-labelledby="hero-title"
-      className="relative h-[100svh] min-h-[720px] overflow-hidden bg-white"
+      className="relative h-[100svh] min-h-[600px] overflow-hidden bg-white"
     >
       {/* Final layout: heading, then three columns (card slot + caption) */}
-      <div className="container-x flex h-full flex-col justify-center pt-[7.5rem] pb-10">
+      <div className="container-x flex h-full flex-col justify-center pt-[7.5rem] pb-10 short:pt-24 short:pb-8">
         <div ref={head} className="mx-auto max-w-2xl text-center">
           {servicesHead}
         </div>
-        <ul className="mt-10 grid grid-cols-3 gap-8 xl:gap-12">
+        <ul className="mt-10 grid grid-cols-3 gap-8 xl:gap-12 short:mt-6">
           <li>
-            <div ref={slot} aria-hidden="true" className="aspect-[5/4] w-full" />
-            <div data-caption className="mt-6">
+            <div ref={slot} aria-hidden="true" className="aspect-[5/4] max-h-[max(180px,calc(100svh-470px))] w-full" />
+            <div data-caption className="mt-6 short:mt-4">
               <ServiceCaption s={first} />
             </div>
           </li>
           {rest.map((s) => (
             <li key={s.slug}>
-              <div data-other className="relative aspect-[5/4] w-full overflow-hidden rounded-2xl bg-night">
+              <div data-other className="relative aspect-[5/4] max-h-[max(180px,calc(100svh-470px))] w-full overflow-hidden rounded-2xl bg-night">
                 <div className="absolute inset-0">
                   <VideoBg video={videos[s.video]} playing={playing && revealed} label={`${s.title} video`} />
                 </div>
               </div>
-              <div data-caption className="mt-6">
+              <div data-caption className="mt-6 short:mt-4">
                 <ServiceCaption s={s} />
               </div>
             </li>

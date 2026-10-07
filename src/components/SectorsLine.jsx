@@ -77,7 +77,7 @@ export default function SectorsLine() {
 
         {/* Photograph panel, crossfading with the active sector */}
         <div className="hidden lg:col-span-5 lg:block">
-          <div className="sticky top-28 aspect-[4/5] overflow-hidden rounded-3xl bg-night">
+          <div className="sticky top-28 aspect-[4/5] max-h-[calc(100svh-9rem)] w-full overflow-hidden rounded-3xl bg-night">
             {sectors.items.map((s, i) => (
               <img
                 key={s.name}

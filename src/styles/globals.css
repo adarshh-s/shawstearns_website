@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 @import './animations.css';
 
+/* `short:` — short desktop windows (laptops, screen-sharing in a meeting): pinned, full-screen
+   sections tighten their spacing so everything still fits on one screen. */
+@custom-variant short (@media (max-height: 820px));
+
 /* Loretta Display (licensed — Adobe Fonts or font files). Either:
    - add the licensed files to /public/fonts (see README.txt there), or
    - add your Adobe Fonts kit <link> in index.html (family name "loretta-display").
