@@ -136,7 +136,7 @@ function PinnedHero() {
         scrollTrigger: {
           trigger: root.current,
           start: 'top top',
-          end: '+=180%',
+          end: '+=140%',
           pin: true,
           scrub: 0.6,
           invalidateOnRefresh: true,
@@ -150,7 +150,6 @@ function PinnedHero() {
         .to(others, { opacity: 1, xPercent: 0, stagger: 0.12, duration: 0.6, ease: 'power3.out' }, 0.55)
         .to(head.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.7)
         .to(captions, { opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: 'power2.out' }, 0.85)
-        .to({}, { duration: 0.35 })
     },
     { scope: root },
   )
