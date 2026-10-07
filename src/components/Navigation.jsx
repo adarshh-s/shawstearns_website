@@ -347,11 +347,11 @@ export default function Navigation() {
   const openItem = nav.find((n) => n.to === open)
   const tone = lightText ? 'text-white' : 'text-navy'
   const surface = open
-    ? 'bg-white/90 backdrop-blur-xl'
+    ? 'bg-white/95 backdrop-blur-md'
     : scrolled
       ? dark
-        ? 'bg-night/55 backdrop-blur-xl'
-        : 'bg-white/75 backdrop-blur-xl'
+        ? 'bg-night/70 backdrop-blur-md'
+        : 'bg-white/85 backdrop-blur-md'
       : 'bg-transparent'
 
   return (

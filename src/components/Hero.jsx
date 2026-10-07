@@ -107,6 +107,8 @@ function PinnedHero() {
   const head = useRef(null)
   const cue = useRef(null)
   const [playing, setPlaying] = useState(true)
+  // The two side videos only decode once they have slid into view.
+  const [revealed, setRevealed] = useState(false)
 
   useGSAP(
     () => {
@@ -114,11 +116,16 @@ function PinnedHero() {
       const others = q('[data-other]')
       const captions = q('[data-caption]')
 
-      const start = () => ({ left: 12, top: 120, width: root.current.offsetWidth - 24, height: root.current.offsetHeight - 132 })
-      const end = () => {
+      // The card stays full-size (no layout work per frame); a clip-path window shrinks
+      // from the whole card down to the first service slot.
+      const box = () => {
+        const c = card.current.getBoundingClientRect()
         const r = slot.current.getBoundingClientRect()
-        const o = root.current.getBoundingClientRect()
-        return { left: r.left - o.left, top: r.top - o.top, width: r.width, height: r.height }
+        return { t: r.top - c.top, l: r.left - c.left, r: c.right - r.right, b: c.bottom - r.bottom }
+      }
+      const clip = (radius) => () => {
+        const { t, r, b, l } = box()
+        return `inset(${t}px ${r}px ${b}px ${l}px round ${radius}px)`
       }
 
       gsap.set(others, { opacity: 0, xPercent: 40 })
@@ -126,29 +133,19 @@ function PinnedHero() {
 
       const tl = gsap.timeline({
         defaults: { ease: 'power2.inOut' },
-        scrollTrigger: { trigger: root.current, start: 'top top', end: '+=180%', pin: true, scrub: 1, invalidateOnRefresh: true },
+        scrollTrigger: {
+          trigger: root.current,
+          start: 'top top',
+          end: '+=180%',
+          pin: true,
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => setRevealed(self.progress > 0.97),
+        },
       })
       tl.to(copy.current, { opacity: 0, y: -30, duration: 0.3, ease: 'power1.in' }, 0)
         .to(cue.current, { opacity: 0, duration: 0.2 }, 0)
-        .fromTo(
-          card.current,
-          {
-            left: () => start().left,
-            top: () => start().top,
-            width: () => start().width,
-            height: () => start().height,
-            borderRadius: 28,
-          },
-          {
-            left: () => end().left,
-            top: () => end().top,
-            width: () => end().width,
-            height: () => end().height,
-            borderRadius: 16,
-            duration: 1,
-          },
-          0,
-        )
+        .fromTo(card.current, { clipPath: 'inset(0px 0px 0px 0px round 28px)' }, { clipPath: clip(16), duration: 1 }, 0)
         .to(shade.current, { opacity: 0.2, duration: 0.6 }, 0.25)
         .to(others, { opacity: 1, xPercent: 0, stagger: 0.12, duration: 0.6, ease: 'power3.out' }, 0.55)
         .to(head.current, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.7)
@@ -183,7 +180,7 @@ function PinnedHero() {
             <li key={s.slug}>
               <div data-other className="relative aspect-[5/4] w-full overflow-hidden rounded-2xl bg-night">
                 <div className="absolute inset-0">
-                  <VideoBg video={videos[s.video]} playing={playing} label={`${s.title} video`} />
+                  <VideoBg video={videos[s.video]} playing={playing && revealed} label={`${s.title} video`} />
                 </div>
               </div>
               <div data-caption className="mt-6">
@@ -197,7 +194,7 @@ function PinnedHero() {
       {/* The hero card that travels into the first column */}
       <div
         ref={card}
-        className="absolute top-[120px] left-3 h-[calc(100%-132px)] w-[calc(100%-24px)] overflow-hidden rounded-[28px] bg-night will-change-[left,top,width,height]"
+        className="absolute top-[120px] left-3 h-[calc(100%-132px)] w-[calc(100%-24px)] overflow-hidden rounded-[28px] bg-night will-change-[clip-path]"
       >
         <div className="absolute inset-0">
           <VideoBg video={videos.home} playing={playing} label="hero video" />

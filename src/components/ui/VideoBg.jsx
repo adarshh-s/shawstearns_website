@@ -48,8 +48,9 @@ export default function VideoBg({
         muted
         loop
         playsInline
-        preload={reduce ? 'none' : 'auto'}
-        autoPlay={!reduce}
+        preload={reduce || !playing ? 'metadata' : 'auto'}
+        // Only autoplay when actually meant to play — otherwise a 'paused' video starts on load.
+        autoPlay={!reduce && playing}
         aria-hidden="true"
         tabIndex={-1}
       />

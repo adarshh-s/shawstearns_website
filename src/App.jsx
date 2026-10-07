@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
+import Cursor from './components/ui/Cursor'
 import { loaders } from './pages/loaders'
 import { initSmoothScroll, resetScroll } from './utils/scrollAnimations'
 
@@ -47,6 +48,7 @@ export default function App() {
         </motion.div>
       </AnimatePresence>
       <ScrollToTop />
+      <Cursor />
     </MotionConfig>
   )
 }

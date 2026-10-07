@@ -30,11 +30,12 @@ let lenis = null
 export function initSmoothScroll() {
   if (prefersReducedMotion()) return () => {}
   lenis = new Lenis({
-    duration: 1.1,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo-out
+    // lerp (rather than a fixed duration) gives a continuous, silky glide that responds
+    // proportionally to each wheel movement.
+    lerp: 0.085,
     smoothWheel: true,
-    wheelMultiplier: 1,
-    touchMultiplier: 1.4,
+    wheelMultiplier: 0.9,
+    touchMultiplier: 1.2,
   })
   lenis.on('scroll', ScrollTrigger.update)
   const tick = (time) => lenis.raf(time * 1000)

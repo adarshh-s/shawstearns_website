@@ -120,8 +120,8 @@ export const announcement = { label: 'We work with a limited number of clients',
 
 // Footage: a mix of work-relevant clips (skylines, construction, cost reporting, planning,
 // signing, client discussions) and a few calm nature-meets-city moments that echo the
-// client's original hero. The home hero (Dubai skyline, day to dusk) and the handshake are
-// Pexels free licence; the rest are Mixkit free licence.
+// client's own hero. The home hero IS the client's video (trees and grasses before the Dubai
+// skyline, lightly enhanced and looped); the handshake is Pexels; the rest are Mixkit.
 export const videos = {
   home: { src1080: '/media/home-1080.mp4', src720: '/media/home-720.mp4', poster: '/media/home-poster.jpg' },
   // relevant
